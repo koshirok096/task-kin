@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import invitationRoute from './route/invitationRoute.js';
 import userRoute from "./route/userRoute.js";
 import groupRoute from "./route/groupRoute.js";
+// import todoRoute from "./route/todoRoute.js"; // added by koshiro
+// import shoppingRoute from "./route/shoppingRoute.js"; // added by koshiro
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,6 +22,9 @@ app.use(userRoute);
 app.use(groupRoute);
 app.use(invitationRoute);
 
+// added by koshiro
+// app.use(todoRoute);
+// app.use(shoppingRoute);
 
 const PORT = 3001;
 app.listen(PORT, () => {

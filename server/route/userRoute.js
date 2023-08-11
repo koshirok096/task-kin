@@ -1,6 +1,9 @@
 import express from 'express';
-const router = express.Router();
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from '../model/user.js';
+
+const router = express.Router();
 
 // Create a new user
 router.post('/users', async (req, res) => {
@@ -13,6 +16,30 @@ router.post('/users', async (req, res) => {
   }
 });
 
+// Login user
+export const login = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) return next(handleError(404, "User not found"));
+    const isCorrect = await bcrypt.compare(req.body.password, user.password);
+
+    if (!isCorrect) return next(handleError(400, "Wrong password"));
+    const token = generateToken(user._id); // call function that generate token
+    const { password, ...othersData } = user._doc;
+
+    // below code could be wrong? by koshiro
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true
+      })
+      .status(200)
+      .json({ token, ...othersData });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Get all users (for testing purposes)
 router.get('/users', async (req, res) => {
   try {
@@ -23,4 +50,16 @@ router.get('/users', async (req, res) => {
   }
 });
 
+const generateToken = (userId) => {
+  const token = jwt.sign({ id: userId }, process.env.JWT, {
+    expiresIn: '1h',
+    // headers: {
+    //   typ: 'JWT'
+    // }
+  });
+  return token;
+};
+
 export default router;
+
+
