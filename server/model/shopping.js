@@ -6,14 +6,24 @@ const shoppingSchema = new mongoose.Schema({
     required: true,
     default: ''
   },
-  completed: {
-    type: Boolean,
-    default: false
+  groupId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Group",
+    required: true,
   },
+  status: { type: String, enum: ['inprogress', 'completed', 'created'], default: 'created' },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
   }
 }, { timestamps: true });
 

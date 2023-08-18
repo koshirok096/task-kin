@@ -1,97 +1,84 @@
-///// todo controller /////
-
-import Todo from "../models/Todo.js";
-
-// ADD
-export const addTodo = async (request, response) => {
-  try {
-    const createdBy = request.user.id;
-    const newTodo = await Todo.create({
-      title: request.body.todo,
-      createdBy: createdBy,
-    });
-
-    return response.status(200).json(newTodo);
-  } catch (error) {
-    return response.status(500).json(error.message);
-  }
-}
-
-// GET
-export const getAllTodos = async (request, response) => {
-  try {
-      const todos = await Todo.find({}).sort({ 'createdAt': -1 });
-
-      return response.status(200).json(todos);
-  } catch (error) {
-      return response.status(500).json(error.message);
-  }
-}
-
-// COMPLETE
-export const toggleTodoDone = async (request, response) => {
-  try {
-      const todoRef = await Todo.findById(request.params.id);
-
-      const todo = await Todo.findOneAndUpdate(
-          { _id: request.params.id },
-          { completed: !todoRef.completed }
-      );
-
-      await todo.save();
-
-      return response.status(200).json(todo);
-  } catch (error) {
-      return response.status(500).json(error.message);
-  }
-}
-
-// UPDATE
-export const updateTodo = async (request, response) => {
-  try {
-      await Todo.findOneAndUpdate(
-          { _id: request.params.id },
-          { title: request.body.title }
-      );
-
-      const todo = await Todo.findById(request.params.id);
-
-      return response.status(200).json(todo);
-  } catch (error) {
-      return response.status(500).json(error.message);
-  }
-}
-
-// DELETE
-export const deleteTodo = async (request, response) => {
-  try {
-      const todo = await Todo.findByIdAndDelete(request.params.id);
-
-      return response.status(200).json(todo);
-  } catch (error) {
-      return response.status(500).json(error.message);
-  }
-}
-
-
-///// todo route /////
-
 import express from "express";
-import {
-  addTodo,
-  getAllTodos,
-  toggleTodoDone,
-  updateTodo,
-  deleteTodo,
-} from "../controllers/todo.js";
-import { verifyToken } from "../verifyToken.js";
+import { verifyUser } from "../middleware/verifyUser.js";
+import Todo from "../model/Todo.js";
 
 const router = express.Router();
 
-router.post('/:id', verifyToken, addTodo);
-router.get('/', verifyToken, getAllTodos);
-router.get('/:id', verifyToken, toggleTodoDone);
-router.put('/:id', verifyToken, updateTodo);
-router.delete('/:id', verifyToken, deleteTodo);
+// ADD
+export const addTodo = async (req, res) => {
+  const { id } = req.user;
+  const { title, description, groupId, assingTo, startDate, endDate } = req.body;
 
+  if (!title) return res.status(400).send("Title is required");
+  if (!description) return res.status(400).send("Description is required");
+  if (!groupId) return res.status(400).send("Group is required");
+  if (!startDate) return res.status(400).send("Start date is required");
+  if (!endDate) return res.status(400).send("End date is required");
+
+  try {
+    const todo = new Todo({
+      title,
+      description,
+      groupId,
+      assingTo,
+      startDate,
+      endDate,
+      createdBy: id,
+    });
+    await todo.save();
+    res.status(201).send(todo);
+
+  } catch (error) {
+    return res.status(400).send(error.message);
+  }
+}
+//GET
+export const getGroupTodos = async (req, res) => {
+  const { groupId } = req.params;
+
+  try {
+    const todos = await Todo.find({ groupId });
+    res.status(200).send(todos);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+// UPDATE
+export const updateTodo = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, assingTo, startDate, endDate, status } = req.body;
+
+  try {
+
+    const todo = await Todo.findOneAndUpdate(
+      { _id: id },
+      { title, description, assingTo, startDate, endDate, status },
+      { new: true }
+    );
+    res.status(200).send(todo);
+
+  } catch (error) {
+
+    return res.status(500).send(error.message);
+
+  }
+}
+// DELETE
+export const deleteTodo = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+
+    await Todo.findByIdAndDelete(id);
+    res.status(200).send("Todo deleted successfully");
+
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
+router.post('/create', verifyUser, addTodo);
+router.get('/:groupId', verifyUser, getGroupTodos);
+router.put('/:id', verifyUser, updateTodo);
+router.delete('/:id', verifyUser, deleteTodo);
 export default router;
