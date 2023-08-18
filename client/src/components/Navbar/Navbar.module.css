@@ -1,0 +1,11 @@
+.header_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header_img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;   
+}
