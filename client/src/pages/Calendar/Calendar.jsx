@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 
-import "./Calendar.module.css";
+import styles from "./Calendar.module.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
@@ -21,7 +21,7 @@ export default function Calendar() {
   ]);
 
   return (
-        <div className="App">
+        <div className={styles.main_wrapper}>
          <Navbar />
 
         <BigCalendar
