@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -21,7 +22,6 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.2",
     "nodemon": "^3.0.1",
-    "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-google-oidc": "^0.1.0"
   }

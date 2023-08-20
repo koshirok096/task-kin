@@ -8,32 +8,29 @@ import userRoute from "./route/userRoute.js";
 import groupRoute from "./route/groupRoute.js";
 import todoRoute from "./route/todoRoute.js"; // added by koshiro
 // import shoppingRoute from "./route/shoppingRoute.js"; // added by koshiro
-import connectDb from './db.js';
+import db from './db/db.js';
 import dotenv from 'dotenv';
-import passport from "passport";
-import authRoute from "./route/authRoute.js";
 import session from 'express-session';
-import passportStrategies from './passport.js';
+import header_middleware from './middleware/header.js';
 
-dotenv.config();
+import cors from 'cors';
+import bodyParser from "body-parser";
+
 const app = express();
-connectDb();
+dotenv.config();
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))
-console.log(passport.initialize());
-console.log(passport.session());
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(header_middleware);
+app.use(bodyParser.json({ limit: "30mb", extended: true}));
+app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
+
+app.use(cors());
+
+
 
 // Connect to MongoDB (assuming you have a local MongoDB instance running)
 // mongoose.connect(process.env.MONGO, { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(express.json());
-app.use("/auth", authRoute);
+app.use("/auth", userRoute);
 app.use("/group", groupRoute);
 app.use("/invite", invitationRoute);
 app.use("/todo", todoRoute); // added by koshiro
