@@ -6,6 +6,7 @@ import Login from './pages/Login/Login';
 import Todolist from './pages/Todolist/Todolist';
 import Calendar from './pages/Calendar/Calendar';
 import Settings from './pages/Settings/Settings';
+import Signup from './pages/Signup/Signup';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/todolist" element={<Todolist />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/settings" element={<Settings />} />

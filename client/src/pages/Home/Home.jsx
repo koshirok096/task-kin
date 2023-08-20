@@ -21,6 +21,9 @@ const Home = () => {
           <li>
             <Link to="/login">Login Page</Link>
           </li>
+          <li>
+            <Link to="/signup">Signup</Link>
+          </li>
         </ul>
       </nav>
     </>
