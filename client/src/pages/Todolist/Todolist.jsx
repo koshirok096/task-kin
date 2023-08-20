@@ -20,11 +20,13 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
 
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Todolist.module.css";
+
+import AddTodoModal from '../../components/AddTodoModal/AddTodoModal'
+import UpdateTodoModal from '../../components/UpdateTodoModal/UpdateTodoModal'
+
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -42,14 +44,14 @@ export default function Todolist() {
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
 
+  const [OpenAddModal, setOpenAddModal] = React.useState(false);
+  const [OpenUpdateModal, setOpenUpdateModal] = React.useState(false);
+
   // speed dial
-  const actions = [
-    { icon: <FileCopyIcon />, name: 'Add Todo' },
-    { icon: <SaveIcon />, name: 'Update Todo' },
-    // { icon: <PrintIcon />, name: 'Print' },
-    // { icon: <ShareIcon />, name: 'Share' },
-  ];
-  
+  const handleAddTodoClick = () => setOpenAddModal(true);
+  const handleAddTodoClose = () => setOpenAddModal(false);
+  const handleUpdateTodoClick = () => setOpenUpdateModal(true);
+  const handleUpdateTodoClose = () => setOpenUpdateModal(false);
 
   return (
 
@@ -107,19 +109,26 @@ export default function Todolist() {
           {/* speeddial */}
 
         <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
-          <SpeedDial
-            ariaLabel="SpeedDial basic example"
-            sx={{ position: 'absolute', bottom: 16, right: 16 }}
-            icon={<SpeedDialIcon />}
-          >
-            {actions.map((action) => (
-              <SpeedDialAction
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-              />
-            ))}
-          </SpeedDial>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: 'absolute', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+        >
+            <SpeedDialAction
+            key="Add Todo"
+            icon={<FileCopyIcon />}
+            tooltipTitle="Add Todo"
+            onClick={handleAddTodoClick}
+            />
+            <SpeedDialAction
+            key="Update Todo"
+            icon={<SaveIcon />}
+            tooltipTitle="Update Todo"
+            onClick={handleUpdateTodoClick}
+            />
+        </SpeedDial>
+        <AddTodoModal open={OpenAddModal} onClose={handleAddTodoClose} />
+        <UpdateTodoModal open={OpenUpdateModal} onClose={handleUpdateTodoClose} />
         </Box>
     </Box>
   );
