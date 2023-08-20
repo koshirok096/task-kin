@@ -19,8 +19,6 @@ dotenv.config();
 const app = express();
 connectDb();
 
-
-
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -43,6 +41,8 @@ app.use("/todo", todoRoute); // added by koshiro
 // added by koshiro
 // app.use(todoRoute);
 // app.use(shoppingRoute);
+
+
 
 const PORT = 3001;
 app.listen(PORT, () => {
