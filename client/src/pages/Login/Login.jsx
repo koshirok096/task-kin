@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from "./Login.module.css";
 
 // src/components/LoginForm.js
@@ -13,44 +13,52 @@ const Login = () => {
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector(state => state.auth.token !== null);
+	const navigate = useNavigate(); // Get the navigate object
+	const location = useLocation();
 
 
 	useEffect(() => {
-	  // ログイン済みの場合、他の画面にリダイレクトなど
-	  if (isLoggedIn) {
-		console.log('User is already logged in');
-		// 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
-	}
-	}, [isLoggedIn]);
+		// ログイン済みの場合、他の画面にリダイレクトなど
+		if (isLoggedIn) {
+		  console.log('User is already logged in');
+		  
+		  // 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
+		  if (location.state && location.state.loginSuccess) {
+			console.log('User logged in:', location.state.user);
+		  }
+		}
+	  }, [isLoggedIn, location]);
+	  
   
-  
-	const handleSubmit = async (e) => {
+	  const handleSubmit = async (e) => {
 		e.preventDefault();
-	
-		dispatch(loginStart()); // ローディング状態を設定
-	
+	  
+		dispatch(loginStart()); // Set loading to true
+	  
 		try {
 		  const response = await axios.post('http://localhost:3001/auth/login', {
 			email,
 			password,
 		  });
-	
+	  
 		  const data = response.data;
-	
+	  
 		  if (response.status === 200) {
-			dispatch(loginSuccess(data)); // ログイン成功アクションをディスパッチ
-			console.log('Login successful!');
-			// 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
+			dispatch(loginSuccess(data)); // Dispatch success action with user and token
+			console.log('Login successful!', data);
+			// Redirect or perform other actions here
+			navigate('/', { state: { loginSuccess: true, user: data.user } });
+
 		  } else {
-			dispatch(loginFailure(data.message)); // ログイン失敗アクションをディスパッチ
+			dispatch(loginFailure(data.message)); // Dispatch failure action with error message
 			console.log('Login failed:', data.message);
 		  }
 		} catch (error) {
-		  dispatch(loginFailure('An error occurred'));
+		  dispatch(loginFailure('An error occurred')); // Dispatch failure action with a generic error
 		  console.error('An error occurred:', error);
 		}
 	  };
-	
+		  
 	return (
 	  <div>
 		<h2>Login</h2>
@@ -75,7 +83,7 @@ const Login = () => {
 	);
   };
   
-  export default Login; // ここで export する
+  export default Login; 
 	
 
 // const Login = () => {
