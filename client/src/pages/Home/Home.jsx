@@ -9,13 +9,12 @@ import styles from "./Home.module.css"
 const Home = () => {
   const user = useSelector(state => state.auth.user);
   const token = useSelector(state => state.auth.token);
-  const todo = useSelector(state => state.todo.todo);
   // const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("User login status:", user);
-    console.log("Todo status:", todo);
-  }, [user, todo]);
+    
+  }, [user]);
 
   // const handleLogout = () => {
   //   dispatch(logout()); // Dispatch logout action

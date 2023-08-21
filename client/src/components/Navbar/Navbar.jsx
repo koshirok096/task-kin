@@ -111,7 +111,7 @@ export default function Navbar() {
   };
 
   const user = useSelector(state => state.auth.user);
-  const token = useSelector(state => state.auth.token);
+  // const token = useSelector(state => state.auth.token);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -145,7 +145,8 @@ export default function Navbar() {
               alignItems: 'center',
               margin: '1rem 0 1rem auto'
             }}>
-            <Avatar alt={user.username} src="/static/images/avatar/1.jpg" />
+            {/* <Avatar alt={user.username} src="/static/images/avatar/1.jpg" /> */}
+            <Avatar alt='someone' src="/static/images/avatar/1.jpg" />
             {/* <p style={{margin:'0'}}>{user.username}</p> */}
           </div>
         </Toolbar>
