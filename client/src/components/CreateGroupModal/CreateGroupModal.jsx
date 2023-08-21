@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom'; // Include useNavigate and useLocation
 
 import Modal from '@mui/material/Modal';
-import styles from "./CreateInvitationModal.module.css";
+import styles from "./CreateGroupModal.module.css";
 
 
 const modalStyle = {
@@ -22,8 +22,8 @@ const modalStyle = {
   p: 4,
 };
 
-export default function CreateInvitationModal({ open, onClose }) {
-  const [email, setEmail] = useState('');
+export default function CreateGroupModal({ open, onClose }) {
+  const [title, setTitle] = useState('');
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -47,8 +47,7 @@ export default function CreateInvitationModal({ open, onClose }) {
         autoComplete="off"
       >
     <div className={styles.form_wrapper}>
-      <h1>Create Invitation</h1>
-      <p>Send message to your family to join the team</p>
+      <h1>Create Group</h1>
       <form
       //  onSubmit={handleSubmit}
       style={{
@@ -59,14 +58,14 @@ export default function CreateInvitationModal({ open, onClose }) {
       }}
       >
             <TextField
-              id="email"
-              label="Email Address"
+              id="title"
+              label="title"
               variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               sx={{ marginBottom: '1rem' }}
               required
-              type="email"
+              type="title"
             />
         <Button
           variant="contained"

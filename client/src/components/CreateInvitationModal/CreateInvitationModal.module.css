@@ -1,0 +1,16 @@
+.main_wrapper{
+    width: 90vw;
+    height: 100%;
+    margin: auto;
+    padding: 10px;   
+}
+.form_wrapper {
+    text-align: center;
+    border: 1px solid #eee;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow:rgba(40, 40, 40, 0.059) 0px 0px 6px 3px;
+    -webkit-box-shadow:rgba(40, 40, 40, 0.0588235) 0px 0px 6px 3px;
+    -moz-box-shadow:rgba(40, 40, 40, 0.0588235) 0px 0px 6px 3px;
+    
+}

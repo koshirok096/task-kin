@@ -25,10 +25,17 @@ const Home = () => {
       {user ? (
         <>
           <p>Hello, {user.username}!</p>
+          {/* if login user already joined group, it shows group name. If not, it says "you are not joined any group yet"
+          Numbers of tasks (except compeleted tasks) user has.
+          Numbers of pending invitation user has. */}
+        {/* {<p>Your Group Name Here</p>
+          <p>Numbers of Remain Tasks : 17</p>
+          <p>Numbers of Remain Invitation : 2</p> */}
+
           {/* <button onClick={handleLogout}>Logout</button> */}
         </>
       ) : (
-        <p>Hello, Guest!</p>
+        <p></p>
       )}
       
       {/* 他のコンテンツや情報を表示 */}

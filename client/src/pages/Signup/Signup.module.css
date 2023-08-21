@@ -15,3 +15,10 @@
   -moz-box-shadow:rgba(40, 40, 40, 0.0588235) 0px 0px 6px 3px;
   
 }
+
+.form_wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
