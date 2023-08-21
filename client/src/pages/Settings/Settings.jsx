@@ -60,7 +60,8 @@ export default function Settings() {
           </div>
           <h2>Settings</h2>
           <div className={styles.switch_wrapper}>
-          <Switch {...label} defaultUnchecked />
+          {/* <Switch {...label} defaultUnchecked /> */}
+          <Switch {...label} />
             Enable Darkmode
           </div>
         </div>
