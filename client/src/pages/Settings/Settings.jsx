@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Navbar from "../../components/Navbar/Navbar";
 import CreateInvitationModal from '../../components/CreateInvitationModal/CreateInvitationModal'
 import styles from "./Settings.module.css";
+import ProfileCard from '../../components/ProfileCard/ProfileCard';
 
 export default function Settings() {
   const [OpenCreateInvitationModal, setOpenCreateInvitationModal] = React.useState(false);
@@ -15,9 +16,15 @@ export default function Settings() {
     <>
         <Navbar />
         <Box className={styles.main_wrapper}>
-          <div>Settings</div>
-          <Button variant="outlined" onClick={handleCreateInvitationClick}>Create Invitation</Button>
-          <CreateInvitationModal open={OpenCreateInvitationModal} onClose={handleCreateInvitationClose} />
+          <div>
+            <h4>Settings</h4>
+            <Button variant="outlined" onClick={handleCreateInvitationClick}>Create Invitation</Button>
+            <CreateInvitationModal open={OpenCreateInvitationModal} onClose={handleCreateInvitationClose} />
+          </div>
+          <div>
+            <h4>Profile</h4>
+            <ProfileCard /> 
+          </div>
         </Box>
 
     </>

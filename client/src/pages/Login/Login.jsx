@@ -1,81 +1,192 @@
-import { Link } from "react-router-dom";
-import styles from "./Login.module.css";
-
-// src/components/LoginForm.js
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../slices/authSlice';
-import axios from 'axios'; // Import axios
-
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import Navbar from "../../components/Navbar/Navbar";
+import styles from "./Login.module.css";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const dispatch = useDispatch();
-	const isLoggedIn = useSelector(state => state.auth.token !== null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.auth.token !== null);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log('User is already logged in');
+      // 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
+    }
+  }, [isLoggedIn]);
 
-	useEffect(() => {
-	  // ログイン済みの場合、他の画面にリダイレクトなど
-	  if (isLoggedIn) {
-		console.log('User is already logged in');
-		// 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
-	}
-	}, [isLoggedIn]);
-  
-  
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-	
-		dispatch(loginStart()); // ローディング状態を設定
-	
-		try {
-		  const response = await axios.post('http://localhost:3001/auth/login', {
-			email,
-			password,
-		  });
-	
-		  const data = response.data;
-	
-		  if (response.status === 200) {
-			dispatch(loginSuccess(data)); // ログイン成功アクションをディスパッチ
-			console.log('Login successful!');
-			// 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
-		  } else {
-			dispatch(loginFailure(data.message)); // ログイン失敗アクションをディスパッチ
-			console.log('Login failed:', data.message);
-		  }
-		} catch (error) {
-		  dispatch(loginFailure('An error occurred'));
-		  console.error('An error occurred:', error);
-		}
-	  };
-	
-	return (
-	  <div>
-		<h2>Login</h2>
-		<form onSubmit={handleSubmit}>
-		  <input
-			type="text"
-			placeholder="Email"
-			value={email}
-			onChange={(e) => setEmail(e.target.value)}
-			required
-		  />
-		  <input
-			type="password"
-			placeholder="Password"
-			value={password}
-			onChange={(e) => setPassword(e.target.value)}
-			required
-		  />
-		  <button type="submit">Login</button>
-		</form>
-	  </div>
-	);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    dispatch(loginStart());
+
+    try {
+      const response = await axios.post('http://localhost:3001/auth/login', {
+        email,
+        password,
+      });
+
+      const data = response.data;
+
+      if (response.status === 200) {
+        dispatch(loginSuccess(data));
+        console.log('Login successful!');
+        // 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
+      } else {
+        dispatch(loginFailure(data.message));
+        console.log('Login failed:', data.message);
+      }
+    } catch (error) {
+      dispatch(loginFailure('An error occurred'));
+      console.error('An error occurred:', error);
+    }
   };
+
+  return (
+    <>
+      <Navbar />
+      <Box 
+        className={styles.main_wrapper}
+        component="form"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          '& > :not(style)': {
+            m: 1,
+            width: '50ch',
+          },
+        }}
+        marginBottom='1rem'
+        noValidate
+        autoComplete="off"
+      >
+        <div className={styles.login_wrapper}>
+          <h1>Login</h1>
+					<div>
+						<TextField 
+							id="outlined-basic" 
+							label="Email" 
+							variant="outlined" 
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							sx={{ marginBottom: '1rem' }} 
+						/>
+						<TextField 
+							id="outlined-basic" 
+							label="Password" 
+							variant="outlined" 
+							type="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							sx={{ marginBottom: '1rem' }} 
+						/>
+					</div>
+
+          <Button 
+            variant="contained" 
+            endIcon={<SendIcon />} 
+            sx={{ marginTop: '1rem' }}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Login
+          </Button>
+
+					<p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+        </div>
+      </Box>
+    </>
+  );
+};
+
+export default Login;
+
+// import { Link } from "react-router-dom";
+// import styles from "./Login.module.css";
+
+// // src/components/LoginForm.js
+// import React, { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { loginStart, loginSuccess, loginFailure } from '../../slices/authSlice';
+// import axios from 'axios'; // Import axios
+
+
+// const Login = () => {
+// 	const [email, setEmail] = useState('');
+// 	const [password, setPassword] = useState('');
+// 	const dispatch = useDispatch();
+// 	const isLoggedIn = useSelector(state => state.auth.token !== null);
+
+
+// 	useEffect(() => {
+// 	  // ログイン済みの場合、他の画面にリダイレクトなど
+// 	  if (isLoggedIn) {
+// 		console.log('User is already logged in');
+// 		// 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
+// 	}
+// 	}, [isLoggedIn]);
   
-  export default Login; // ここで export する
+  
+// 	const handleSubmit = async (e) => {
+// 		e.preventDefault();
+	
+// 		dispatch(loginStart()); // ローディング状態を設定
+	
+// 		try {
+// 		  const response = await axios.post('http://localhost:3001/auth/login', {
+// 			email,
+// 			password,
+// 		  });
+	
+// 		  const data = response.data;
+	
+// 		  if (response.status === 200) {
+// 			dispatch(loginSuccess(data)); // ログイン成功アクションをディスパッチ
+// 			console.log('Login successful!');
+// 			// 例えば、ログイン後の画面にリダイレクトなどの処理をここに書く
+// 		  } else {
+// 			dispatch(loginFailure(data.message)); // ログイン失敗アクションをディスパッチ
+// 			console.log('Login failed:', data.message);
+// 		  }
+// 		} catch (error) {
+// 		  dispatch(loginFailure('An error occurred'));
+// 		  console.error('An error occurred:', error);
+// 		}
+// 	  };
+	
+// 	return (
+// 	  <div>
+// 		<h2>Login</h2>
+// 		<form onSubmit={handleSubmit}>
+// 		  <input
+// 			type="text"
+// 			placeholder="Email"
+// 			value={email}
+// 			onChange={(e) => setEmail(e.target.value)}
+// 			required
+// 		  />
+// 		  <input
+// 			type="password"
+// 			placeholder="Password"
+// 			value={password}
+// 			onChange={(e) => setPassword(e.target.value)}
+// 			required
+// 		  />
+// 		  <button type="submit">Login</button>
+// 		</form>
+// 	  </div>
+// 	);
+//   };
+  
+//   export default Login; // ここで export する
 	
 
 // const Login = () => {
