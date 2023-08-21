@@ -3,21 +3,26 @@ import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
 // import { logout } from '../../slices/authSlice'; // import logout action
 import { Link } from "react-router-dom";
+import styles from "./Home.module.css"
+
 
 const Home = () => {
   const user = useSelector(state => state.auth.user);
-  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  const todo = useSelector(state => state.todo.todo);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("User login status:", user);
-  }, [user]);
+    console.log("Todo status:", todo);
+  }, [user, todo]);
 
   // const handleLogout = () => {
   //   dispatch(logout()); // Dispatch logout action
   // };
 
   return (
-    <>
+    <div className={styles.layout}>
       <Navbar />
 
       <div>Home</div>
@@ -28,9 +33,9 @@ const Home = () => {
           {/* if login user already joined group, it shows group name. If not, it says "you are not joined any group yet"
           Numbers of tasks (except compeleted tasks) user has.
           Numbers of pending invitation user has. */}
-        {/* {<p>Your Group Name Here</p>
+        <p>YOUR GROUP: {user.group}</p>
           <p>Numbers of Remain Tasks : 17</p>
-          <p>Numbers of Remain Invitation : 2</p> */}
+          <p>Numbers of Remain Invitation : 2</p>
 
           {/* <button onClick={handleLogout}>Logout</button> */}
         </>
@@ -53,7 +58,7 @@ const Home = () => {
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   );
 };
 

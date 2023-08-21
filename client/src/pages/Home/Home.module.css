@@ -1,0 +1,5 @@
+.layout{
+    position: relative;
+    left: calc(64px + 1px);
+    padding: 0 1rem;
+}

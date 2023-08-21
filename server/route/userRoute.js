@@ -33,7 +33,7 @@ router.post("/signup", async (req, res) => {
     // save the user
     const result = await user.save();
     
-    res.status(201).json({ message: "User created!", result });
+    res.status(201).json({ message: "User created!", result, token }); // token? (koshiro memo 21/Aug/23 15:00:39)
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = createToken({ email: user.email, userId: user._id });
-    res.status(200).json({ token, expiresIn: 7200, userId: user._id });
+    res.status(200).json({ token, expiresIn: 7200, user: user }); // get user (koshiro memo 21/Aug/23 15:00:39)
   } catch (e) {
     console.log(e);
   }

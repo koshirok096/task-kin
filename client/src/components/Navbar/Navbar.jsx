@@ -18,6 +18,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import Avatar from '@mui/material/Avatar';
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -26,6 +27,9 @@ import styles from "./Navbar.module.css";
 
 import mainLogo from "../../images/main-logo.png"; // Tell webpack this JS file uses this image
 import { Link } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
+
 
 const drawerWidth = 240;
 
@@ -94,7 +98,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function Navbar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -105,6 +109,9 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const user = useSelector(state => state.auth.user);
+  const token = useSelector(state => state.auth.token);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -130,6 +137,17 @@ export default function MiniDrawer() {
             <img className={styles.header_img} src={mainLogo} alt="Logo" />
             Task-Kin
           </Typography>
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: '1rem 0 1rem auto'
+            }}>
+            <Avatar alt={user.username} src="/static/images/avatar/1.jpg" />
+            {/* <p style={{margin:'0'}}>{user.username}</p> */}
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

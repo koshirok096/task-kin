@@ -1,4 +1,4 @@
-import * as React from 'react';
+// import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -27,6 +27,11 @@ import styles from "./Todolist.module.css";
 import AddTodoModal from '../../components/AddTodoModal/AddTodoModal'
 import UpdateTodoModal from '../../components/UpdateTodoModal/UpdateTodoModal'
 
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios'; // 追加
+
+
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -41,17 +46,41 @@ const Demo = styled('div')(({ theme }) => ({
 }));
 
 export default function Todolist() {
+  const user = useSelector((state) => state.auth.user);
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
 
   const [OpenAddModal, setOpenAddModal] = React.useState(false);
   const [OpenUpdateModal, setOpenUpdateModal] = React.useState(false);
+  
+  const [todos, setTodos] = useState([]); // 追加: ToDoリストのステート
 
   // speed dial
   const handleAddTodoClick = () => setOpenAddModal(true);
   const handleAddTodoClose = () => setOpenAddModal(false);
   const handleUpdateTodoClick = () => setOpenUpdateModal(true);
   const handleUpdateTodoClose = () => setOpenUpdateModal(false);
+
+  useEffect(() => {
+    if (user && user.user_ID) {
+      fetchTodoList(user.user_ID);
+    }
+  }, [user]);
+
+  const fetchTodoList = async (user_ID) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/todo/${user_ID}`); // ToDoリストを取得するエンドポイントに変更
+      setTodos(response.data); // 取得したデータをステートにセット
+    } catch (error) {
+      console.error('Error fetching todo list:', error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Todo data:", todos); // data.todo の内容を出力
+    console.log("User info:", user); // ユーザー情報を出力
+  }, [todos, user]);  
+
 
   return (
 
@@ -83,27 +112,28 @@ export default function Todolist() {
             Avatar with text and icon
           </Typography>
           <Demo>
-            <List dense={dense}>
-              {generate(
-                <ListItem
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                </ListItem>,
-              )}
-            </List>
+          <List dense={dense}>
+            {todos.map((todo) => ( // ToDoリストのデータをマップして表示
+              <ListItem
+                key={todo._id} // ユニークなキーを設定
+                secondaryAction={
+                  <IconButton edge="end" aria-label="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <FolderIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={todo.title} // ToDoのタイトルを表示
+                  secondary={secondary ? todo.description : null} // 詳細を表示するかどうか
+                />
+              </ListItem>
+            ))}
+          </List>
           </Demo>
         </Grid>
           {/* speeddial */}

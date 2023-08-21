@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginStart, loginSuccess, loginFailure } from '../../slices/authSlice';
+import { getTodosStart, getTodosSuccess, getTodosFailure } from '../../slices/todosSlice'; // 追加
 import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom'; // Include useNavigate and useLocation
 import Box from '@mui/material/Box';
@@ -14,6 +15,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.token !== null);
+  const todos = useSelector(state => state.todo.todo);
+
   const navigate = useNavigate(); // Get the navigate object
   const location = useLocation();
 
@@ -28,20 +31,31 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     dispatch(loginStart());
-
+  
     try {
       const response = await axios.post('http://localhost:3001/auth/login', {
         email,
         password,
       });
-
+  
       const data = response.data;
-
+  
       if (response.status === 200) {
         dispatch(loginSuccess(data));
         console.log('Login successful!', data);
+  
+        // ToDoデータを取得し、Reduxステートにセットする
+        try {
+          dispatch(getTodosStart());
+          const todosResponse = await axios.get(`http://localhost:3001/todo/${data.user.user_ID}`);
+          const todosData = todosResponse.data;
+          dispatch(getTodosSuccess(todosData));
+        } catch (error) {
+          dispatch(getTodosFailure(error.message));
+        }
+  
         navigate('/', { state: { loginSuccess: true, user: data.user } });
       } else {
         dispatch(loginFailure(data.message));
@@ -52,7 +66,7 @@ const Login = () => {
       console.error('An error occurred:', error);
     }
   };
-
+  
   return (
     <>
       <Box 
