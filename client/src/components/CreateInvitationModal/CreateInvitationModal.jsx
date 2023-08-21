@@ -2,6 +2,10 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { Button, TextField } from '@mui/material';
 
 const modalStyle = {
   position: 'absolute',
@@ -23,8 +27,23 @@ export default function OpenCreateInvitationModal({ open, onClose }) {
             Create Invitation
           </Typography>
           <Typography sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            You can invite your friend/family to a group/groups you belong to.
           </Typography>
+          <h4>Who would you like to invite?</h4>
+          <TextField 
+            id="outlined-basic" 
+            label="Email" 
+            variant="outlined" 
+            type="email"
+            sx={{ marginBottom: '1rem' }} 
+          />
+          <h4>To which group(s)?</h4>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox />} label="Group-title-1" />
+            <FormControlLabel control={<Checkbox />} label="Group-title-2" />
+          </FormGroup>
+          <Button variant="contained" color="success" sx={{ marginTop: '1rem' }}>Invite</Button>
+          
         </Box>
       </Modal>
     );
