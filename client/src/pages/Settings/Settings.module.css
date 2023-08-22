@@ -53,6 +53,13 @@
     height: 100%;
     margin-top: 1rem;
     margin-bottom: auto;
+    margin-left: 40px;
+    border: 1px solid #eee;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow:rgba(40, 40, 40, 0.059) 0px 0px 6px 3px;
+    -webkit-box-shadow:rgba(40, 40, 40, 0.0588235) 0px 0px 6px 3px;
+    -moz-box-shadow:rgba(40, 40, 40, 0.0588235) 0px 0px 6px 3px;
 }
 
 .avatar_wrapper{
