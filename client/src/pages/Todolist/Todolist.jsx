@@ -86,6 +86,7 @@ export default function Todolist() {
             <List dense={dense}>
               {generate(
                 <ListItem
+                onClick={handleUpdateTodoClick}
                   secondaryAction={
                     <IconButton edge="end" aria-label="delete">
                       <DeleteIcon />
@@ -120,12 +121,12 @@ export default function Todolist() {
             tooltipTitle="Add Todo"
             onClick={handleAddTodoClick}
             />
-            <SpeedDialAction
+            {/* <SpeedDialAction
             key="Update Todo"
             icon={<SaveIcon />}
             tooltipTitle="Update Todo"
             onClick={handleUpdateTodoClick}
-            />
+            /> */}
         </SpeedDial>
         <AddTodoModal open={OpenAddModal} onClose={handleAddTodoClose} />
         <UpdateTodoModal open={OpenUpdateModal} onClose={handleUpdateTodoClose} />
