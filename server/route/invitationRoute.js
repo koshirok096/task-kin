@@ -53,7 +53,7 @@ router.post('/:invitationId/reject', verifyUser, async (req, res) => {
 router.get('/:email', async (req, res) => {
   const { email } = req.params;
   console.log(email);
-  const invitations = await Invitation.find({ invitedUser: email }).populate('x');
+  const invitations = await Invitation.find({ invitedUser: email }).populate('group');
   // const invitations = await Invitation.find({ invitedUser: email });
   res.json(invitations);
 });
