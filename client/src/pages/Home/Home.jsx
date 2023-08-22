@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
 // import { logout } from '../../slices/authSlice'; // import logout action
@@ -9,12 +9,24 @@ import styles from "./Home.module.css"
 const Home = () => {
   const user = useSelector(state => state.auth.user);
   const token = useSelector(state => state.auth.token);
+  const [group, setGroup] = useState(null);
   // const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect( async () => {
     console.log("User login status:", user);
+
+    if(user.group.length > 0){
+      getGroup();
+    }
+    
     
   }, [user]);
+
+  const getGroup = async () => {
+    const response = await fetch(`http://localhost:3001/group/${user.group[0]}`);
+    const data = await response.json();
+    setGroup(data);
+  }
 
   // const handleLogout = () => {
   //   dispatch(logout()); // Dispatch logout action
@@ -32,7 +44,7 @@ const Home = () => {
           {/* if login user already joined group, it shows group name. If not, it says "you are not joined any group yet"
           Numbers of tasks (except compeleted tasks) user has.
           Numbers of pending invitation user has. */}
-        <p>YOUR GROUP: {user.group}</p>
+        <p>YOUR GROUP: {group ? group?.name : "No group yet"}</p>
           <p>Numbers of Remain Tasks : 17</p>
           <p>Numbers of Remain Invitation : 2</p>
 

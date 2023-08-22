@@ -78,35 +78,47 @@ export default function Todolist() {
           label="Show Description"
         />
       </FormGroup>
-        <Grid item xs={12} md={6}>
-          <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-            Avatar with text and icon
-          </Typography>
-          <Demo>
-            <List dense={dense}>
-              {generate(
-                <ListItem
-                onClick={handleUpdateTodoClick}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <FolderIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                </ListItem>,
-              )}
-            </List>
-          </Demo>
-        </Grid>
+      <Grid item xs={12} md={6}>
+  <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+    Avatar with text and icon
+  </Typography>
+  <Demo>
+    <List dense={dense}>
+      {generate(
+        <ListItem onClick={handleUpdateTodoClick} secondaryAction={
+          <IconButton edge="end" aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        }>
+          <ListItemAvatar>
+            <Avatar>
+              <FolderIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Single-line item"
+            secondary={secondary ? 'Secondary text' : null}
+          />
+          {/* Start Date */}
+          <ListItemText
+            primary="Start Date"
+            secondary="Start date here"
+          />
+          {/* End Date */}
+          <ListItemText
+            primary="End Date"
+            secondary="End date here"
+          />
+          {/* Assigned Member */}
+          <ListItemText
+            primary="Assigned Member"
+            secondary="Assigned member here"
+          />
+        </ListItem>,
+      )}
+    </List>
+  </Demo>
+</Grid>
           {/* speeddial */}
 
         <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
