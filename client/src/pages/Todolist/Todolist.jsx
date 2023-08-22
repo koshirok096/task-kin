@@ -15,6 +15,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -27,6 +28,7 @@ import styles from "./Todolist.module.css";
 
 import AddTodoModal from '../../components/AddTodoModal/AddTodoModal';
 import UpdateTodoModal from '../../components/UpdateTodoModal/UpdateTodoModal';
+import TodoCard from '../../components/TodoCard/TodoCard';
 
 
 function generate(element) {
@@ -57,9 +59,10 @@ export default function Todolist() {
   return (
 
     <Box className={styles.main_wrapper} sx={{ flexGrow: 1, maxWidth: 752 }}>
-          <Navbar />
+      <Navbar />
+      <TodoCard />
 
-      <FormGroup row>
+      {/* <FormGroup row>
         <FormControlLabel
           control={
             <Checkbox
@@ -80,53 +83,58 @@ export default function Todolist() {
         />
       </FormGroup>
       <Grid item xs={12} md={6}>
-  <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-    Avatar with text and icon
-  </Typography>
-  <Demo>
-    <List dense={dense}>
-      {generate(
-        <ListItem onClick={handleUpdateTodoClick} secondaryAction={
-          <IconButton edge="end" aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        }>
-          <ListItemAvatar>
-            <Avatar>
-              <FolderIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Single-line item"
-            secondary={secondary ? 'Secondary text' : null}
-          />
-          {/* Start Date */}
-          <ListItemText
-            primary="Start Date"
-            secondary="2023/8/22"
-          />
-          {/* End Date */}
-          <ListItemText
-            primary="End Date"
-            secondary="2023/8/25"
-          />
-          {/* Assigned Member */}
-          <ListItemText
-            primary="Assigned To"
-            // secondary="Assigned member here"
-            secondary={
-              <Avatar 
-                alt="Assigned User" 
-                src="/static/images/avatar/1.jpg" 
-                sx={{ width: 25, height: 25, fontSize: 12, bgcolor: teal[200] }} 
-              />
-            }
-          />
-        </ListItem>,
-      )}
-    </List>
-  </Demo>
-</Grid>
+        <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+          Avatar with text and icon
+        </Typography>
+        <Demo>
+          <List dense={dense}>
+            {generate(
+              <ListItem 
+                onClick={handleUpdateTodoClick} 
+                secondaryAction={
+                  <>
+                    <IconButton edge="end" aria-label="edit">
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton edge="end" aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <FolderIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Single-line item"
+                  secondary={secondary ? 'Secondary text' : null}
+                />
+
+                <ListItemText
+                  primary="Start Date"
+                  secondary="2023/8/22"
+                />
+
+                <ListItemText
+                  primary="End Date"
+                  secondary="2023/8/25"
+                />
+
+                <ListItemAvatar>
+                  <Avatar 
+                    alt="Assigned User" 
+                    src="/static/images/avatar/1.jpg" 
+                    sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200] }} 
+                  />
+                </ListItemAvatar>
+              </ListItem>,
+            )}
+          </List>
+        </Demo>
+      </Grid> */}
+
           {/* speeddial */}
 
         <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
