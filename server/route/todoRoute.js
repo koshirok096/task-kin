@@ -104,11 +104,11 @@ export const getInprogressTodos = async (req, res) => {
   }
 };
 
-router.post('/create', verifyUser, addTodo);
+router.post('/create', addTodo);
 router.get('/:groupId', getGroupTodos); // verifyUser deleted 22/Aug/23 15:18:43
 router.put('/:id', verifyUser, updateTodo);
 router.delete('/:id', verifyUser, deleteTodo);
 router.get('/:id/completed', verifyUser, getCompletedTodos);
-router.get('/:id/inprogress', verifyUser, getInprogressTodos);
+router.get('/:id/inprogress', getInprogressTodos);
 
 export default router;

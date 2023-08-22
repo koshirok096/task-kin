@@ -1,36 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
-// import { logout } from '../../slices/authSlice'; // import logout action
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css"
 
-
 const Home = () => {
   const user = useSelector(state => state.auth.user);
-  // const todos = useSelector(state => state.todo.todo);
-  const token = useSelector(state => state.auth.token);
   const [group, setGroup] = useState(null);
   const [uncompletedTodos, setUncompletedTodos] = useState(null);
-  // const dispatch = useDispatch();
+  const [remainingInvitation, setRemainingInvitation] = useState(null);
 
   useEffect(() => {
-    console.log("User login status:", user);
-  
-    const fetchData = async () => {
-      try {
-        if (user.group.length > 0) {
-          await getGroup();
-          await getUncompletedTodos(); // Call getUncompletedTodos after fetching the group
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    };
-    
     fetchData();
-  }, [user]);
-  
+    getRemainingInvitation();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      if (user.group.length > 0) {
+        await getGroup();
+        await getUncompletedTodos();
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
   const getGroup = async () => {
     try {
       const response = await fetch(`http://localhost:3001/group/${user.group[0]}`);
@@ -43,21 +38,30 @@ const Home = () => {
   };
 
   const getUncompletedTodos = async () => {
-    console.log(user.group);
     try {
-        const response = await fetch(`http://localhost:3001/todo/${user.group[0]}`); // URLを修正
-        const todo = await response.json();
-        console.log("Fetched todos:", todo);
-        setUncompletedTodos(todo);
+      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`);
+      const todo = await response.json();
+      console.log("Fetched group todo:", todo); // コンソールでデータを確認
+      setUncompletedTodos(todo);
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
 
-  // const handleLogout = () => {
-  //   dispatch(logout()); // Dispatch logout action
-  // };
+  const getRemainingInvitation = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/invite/${user.email}`);
+      const invitations = await response.json();
 
+      // フィルタリング: invitation.status が 'pending' のものだけ取得
+      const pendingInvitations = invitations.filter(invitation => invitation.status === 'pending');
+
+      console.log("Fetched group invitations:", pendingInvitations); // コンソールでデータを確認
+      setRemainingInvitation(pendingInvitations);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
 
   return (
     <div className={styles.layout}>
@@ -68,20 +72,14 @@ const Home = () => {
       {user ? (
         <>
           <p>Hello, {user.username}!</p>
-          {/* if login user already joined group, it shows group name. If not, it says "you are not joined any group yet"
-          Numbers of tasks (except compeleted tasks) user has.
-          Numbers of pending invitation user has. */}
-        <p>YOUR GROUP: {group ? group?.name : "No group yet"}</p>
-          <p>Numbers of Remain Tasks : {uncompletedTodos ? 'will be numbers here' : 'not connected'}</p>
-          <p>Numbers of Remain Invitation : 2</p>
-
-          {/* <button onClick={handleLogout}>Logout</button> */}
+          <p>YOUR GROUP: {group ? group?.name : "No group yet"}</p>
+          <p>Numbers of Remain Tasks : {uncompletedTodos ? uncompletedTodos.length : 'not connected'}</p>
+          <p>Numbers of Assigned Tasks : {uncompletedTodos ? uncompletedTodos.filter(todo => todo.assingTo && todo.assingTo._id === user._id).length : 'not connected'}</p>
+          <p>Numbers of Pending Invitation : {remainingInvitation ? remainingInvitation.length : '0'}</p>
         </>
       ) : (
         <p></p>
       )}
-      
-      {/* 他のコンテンツや情報を表示 */}
 
       <nav style={{ marginLeft: "30vw" }}>
         <ul>
