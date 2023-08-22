@@ -73,8 +73,9 @@ const Login = () => {
           flexDirection: 'column',
           '& > :not(style)': {
             m: 1,
-            width: '50ch',
-          },
+            width: '99%',
+            justifyContent: "center",
+           },
         }}
         marginBottom='1rem'
         noValidate

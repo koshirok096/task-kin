@@ -124,7 +124,8 @@ export default function Navbar() {
   // const token = useSelector(state => state.auth.token);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", alignItems:"center", justifyContent:"center", width: "100%"}}>
+     
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
