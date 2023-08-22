@@ -23,7 +23,7 @@ const Home = () => {
       <Navbar />
 
       <div>Home</div>
-      <h2>Welcome {user.fullName} to the Top Page</h2>
+      <h2>Welcome {user?.fullName} to the Top Page</h2>
       
       {/* 他のコンテンツや情報を表示 */}
 

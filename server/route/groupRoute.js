@@ -46,4 +46,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get a group by id
+router.get("/:id", verifyUser, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const group = await Group.findById(id);
+
+    if(!group) return res.status(404).send("Group not found");
+
+    return res.status(200).send(group);
+  } catch (error) {
+    // return error message
+
+    return res.status(500).json({
+      error
+    });
+  }
+})
+
 export default router;
