@@ -1,6 +1,6 @@
 .todolist_wrapper {
   border: 1px solid #eee;
-  padding: 32px;
+  padding: 20px;
   margin-bottom: 8px;
   border-radius: 16px;
   box-shadow:rgba(40, 40, 40, 0.059) 0px 0px 6px 3px;
@@ -11,6 +11,7 @@
 .todo_header_wrapper {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .details_wrapper {

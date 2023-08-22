@@ -57,28 +57,27 @@ export default function TodoCard() {
         </Typography>
         <List dense={dense}>
           {generate(
-            <div 
-              onClick={handleUpdateTodoClick} 
-              secondaryAction={
-                <>
-                  <IconButton edge="end" aria-label="edit">
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </>
-              }
-              className={styles.todolist_wrapper}
-            >
+            <div className={styles.todolist_wrapper}>
               <div className={styles.todo_header_wrapper}>
                 <ListItemAvatar>
                   <TaskAltIcon sx={{ color: indigo[500] }} />
                 </ListItemAvatar>
                 <ListItemText
-                  primary="Finish The Project"
-                  secondary={secondary ? 'The description of each task is supposed to be shown here.' : null}
+                  primary={
+                    <Typography variant="h6" sx={{ fontSize: 20 }}>
+                      Finish The Project
+                    </Typography>
+                  }
+                  secondary={secondary ? 'The description of each task is supposed to be shown here.' : ''}
                 />
+                <IconButton aria-label="edit">
+                  <EditIcon onClick={handleUpdateTodoClick} />
+                </IconButton>
+                <IconButton  aria-label="delete">
+                  <DeleteIcon 
+                    // onClick={handleDeleteTodoClick} 
+                  />
+                </IconButton>
               </div>
               <div className={styles.details_wrapper}>
                 {/* Start Date */}
