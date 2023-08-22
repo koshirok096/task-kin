@@ -94,7 +94,7 @@ export default function Settings() {
               <h2>NO USER</h2>
             </>
           )}
-          <p>mari@example.com</p>
+          <p>{user.email}</p>
           <div className={styles.groupbox}>Group A</div>
         </div>
         <CreateInvitationModal

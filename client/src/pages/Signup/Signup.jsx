@@ -8,40 +8,91 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import styles from "./Signup.module.css";
+import loaderImage from '../../images/loader.gif'; // Replace with the actual path to your loader.gif
 
 const Signup = () => {
   const [fullName, setFullName] = useState('');
-  const [userName, setUserName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [fullNameError, setFullNameError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const [signupMessage, setSignupMessage] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add this state
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    try {
-      const response = await axios.post('http://localhost:3001/auth/signup', {
-        fullName,
-        userName,
-        email,
-        password,
-      });
+
+    // バリデーション
+    let formIsValid = true;
+
+    if (!fullName) {
+      setFullNameError('Full Name is required.');
+      formIsValid = false;
+    } else {
+      setFullNameError('');
+    }
+
+    if (!username) {
+      setUsernameError('Username is required.');
+      formIsValid = false;
+    } else {
+      setUsernameError('');
+    }
+
+    if (!email) {
+      setEmailError('Email is required.');
+      formIsValid = false;
+    } else {
+      setEmailError('');
+    }
+
+    if (!password) {
+      setPasswordError('Password is required.');
+      formIsValid = false;
+    } else {
+      setPasswordError('');
+    }
+
+    if (formIsValid) {
+      try {
+        const response = await axios.post('http://localhost:3001/auth/signup', {
+          fullName,
+          username,
+          email,
+          password,
+        });
 
       const data = response.data;
 
-      if (response.status === 201) { // Check for status code 201 (Created)
-        dispatch(loginSuccess(data)); // Simulate automatic login after signup
+      if (response.status === 201) {
         console.log('Signup successful!', data);
-        navigate('/'); // Redirect to the home page or any desired route
+        setSignupMessage('Signup successful! You can now log in.');
+        
+        setTimeout(() => {
+          setIsSubmitting(false); // Enable the button after submission
+          navigate('/login'); // Navigate to the login page
+        }, 3000); // Set a delay of 3 seconds (adjust as needed)
       } else {
         console.log('Signup failed:', data.message);
       }
     } catch (error) {
       console.error('An error occurred during signup:', error);
     }
-  };
-
+  } else {
+    setIsSubmitting(false); // Enable the button after submission
+  }
+};
 
   return (
     <>
@@ -62,6 +113,7 @@ const Signup = () => {
       >
         <div className={styles.signup_wrapper}>
           <h1>Sign Up</h1>
+          {signupMessage && <p className={styles.signup_message}>{signupMessage}</p>} {/* メッセージを表示 */}
           <div>
             <TextField 
               id="fullName" 
@@ -69,14 +121,18 @@ const Signup = () => {
               variant="outlined" 
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
+              error={!!fullNameError} // エラーがある場合は true
+              helperText={fullNameError} // エラーメッセージを表示
               sx={{ marginBottom: '1rem' }} 
             />
             <TextField 
               id="userName" 
               label="User Name" 
               variant="outlined" 
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              error={!!usernameError}
+              helperText={usernameError}
               sx={{ marginBottom: '1rem' }} 
             />
             <TextField 
@@ -85,6 +141,8 @@ const Signup = () => {
               variant="outlined" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              error={!!emailError}
+              helperText={emailError}
               sx={{ marginBottom: '1rem' }} 
             />
             <TextField 
@@ -94,6 +152,8 @@ const Signup = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={!!passwordError}
+              helperText={passwordError}
               sx={{ marginBottom: '1rem' }} 
             />
           </div>
@@ -104,8 +164,15 @@ const Signup = () => {
             sx={{ marginTop: '1rem' }}
             type="submit"
             onClick={handleSubmit}
+            disabled={isSubmitting} // Disable the button during submission
           >
-            Sign Up
+  {isSubmitting ? (
+    <>
+      Signing up... <img src={loaderImage} alt="Loading..." width={24} height={24} />
+    </>
+  ) : (
+    'Sign Up'
+  )}
           </Button>
 
           <p>Already have an account? <Link to="/login">Login</Link></p>

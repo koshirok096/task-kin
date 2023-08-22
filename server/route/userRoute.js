@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
 
     // save the user
     const result = await user.save();
-    
+    const token = createToken({ email: user.email, userId: user._id }); // token? 22/Aug/23 1:03:10
     res.status(201).json({ message: "User created!", result, token }); // token? (koshiro memo 21/Aug/23 15:00:39)
   } catch (err) {
     res.status(500).json({ error: err });

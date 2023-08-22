@@ -154,8 +154,8 @@ export default function Navbar() {
               alignItems: 'center',
               margin: '1rem 0 1rem auto'
             }}>
-            {/* <Avatar alt={user.username} src="/static/images/avatar/1.jpg" /> */}
-            <Avatar alt='someone' src="/static/images/avatar/1.jpg" />
+            <Avatar alt={user.username} src="/static/images/avatar/1.jpg" />
+            {/* <Avatar alt='someone' src="/static/images/avatar/1.jpg" /> */}
             {/* <p style={{margin:'0'}}>{user.username}</p> */}
             <button onClick={handleLogout}>Logout</button> {/* ログアウトボタン */}
           </div>

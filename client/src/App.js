@@ -1,6 +1,7 @@
 import './App.css';
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // import を追加
 import Home from './pages/Home/Home'
 import Login from './pages/Login/Login';
 import Todolist from './pages/Todolist/Todolist';
@@ -9,21 +10,17 @@ import Settings from './pages/Settings/Settings';
 import Signup from './pages/Signup/Signup';
 
 function App() {
+  const isLoggedIn = useSelector(state => state.auth.token !== null); // Redux ストアからログイン状態を取得
+
   return (
     <Router>
-      {/* <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/login">Login Page</Link></li>
-        </ul>
-      </nav> */}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+      <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} /> {/* ログイン済みでないなら "/login" にリダイレクト */}
+        <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <Login />} /> {/* ログイン済みなら "/" にリダイレクト */}
         <Route path="/signup" element={<Signup />} />
-        <Route path="/todolist" element={<Todolist />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/todolist" element={isLoggedIn ? <Todolist /> : <Navigate to="/login" />} /> {/* ログイン済みでないなら "/login" にリダイレクト */}
+        <Route path="/calendar" element={isLoggedIn ? <Calendar /> : <Navigate to="/login" />} /> {/* ログイン済みでないなら "/login" にリダイレクト */}
+        <Route path="/settings" element={isLoggedIn ? <Settings /> : <Navigate to="/login" />} /> {/* ログイン済みでないなら "/login" にリダイレクト */}
       </Routes>
     </Router>
   );
