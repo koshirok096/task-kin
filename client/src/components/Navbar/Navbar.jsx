@@ -19,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Avatar from '@mui/material/Avatar';
+import { lightBlue } from '@mui/material/colors';
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -154,7 +155,7 @@ export default function Navbar() {
               alignItems: 'center',
               margin: '1rem 0 1rem auto'
             }}>
-            <Avatar alt={user.username} src="/static/images/avatar/1.jpg" />
+            <Avatar alt={user.username} src="/static/images/avatar/1.jpg" sx={{ bgcolor: lightBlue[200] }} />
             {/* <Avatar alt='someone' src="/static/images/avatar/1.jpg" /> */}
             {/* <p style={{margin:'0'}}>{user.username}</p> */}
             <button onClick={handleLogout}>Logout</button> {/* ログアウトボタン */}
