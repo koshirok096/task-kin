@@ -65,9 +65,14 @@ export default function Settings() {
           </div>
         </div>
         <div className={styles.right_wrapper}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={styles.avatar_wrapper} />
-          <h2>Username</h2>
-          <p>description</p>
+          <Avatar 
+            alt="Koshiro Kiyota" 
+            src="/static/images/avatar/1.jpg" 
+            className={styles.avatar_wrapper}
+            sx={{ width: 100, height: 100, fontSize: 48 }} 
+          />
+          <h2>Koshiro Kiyota</h2>
+          <p>koshiro@example.com</p>
           <div className={styles.groupbox}>Group A</div>
         </div>
         <CreateInvitationModal
