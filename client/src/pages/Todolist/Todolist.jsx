@@ -15,6 +15,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -86,11 +87,19 @@ export default function Todolist() {
   <Demo>
     <List dense={dense}>
       {generate(
-        <ListItem onClick={handleUpdateTodoClick} secondaryAction={
-          <IconButton edge="end" aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        }>
+        <ListItem 
+          onClick={handleUpdateTodoClick} 
+          secondaryAction={
+            <>
+              <IconButton edge="end" aria-label="edit">
+                <EditIcon />
+              </IconButton>
+              <IconButton edge="end" aria-label="delete">
+                <DeleteIcon />
+              </IconButton>
+            </>
+          }
+        >
           <ListItemAvatar>
             <Avatar>
               <FolderIcon />
@@ -111,17 +120,13 @@ export default function Todolist() {
             secondary="2023/8/25"
           />
           {/* Assigned Member */}
-          <ListItemText
-            primary="Assigned To"
-            // secondary="Assigned member here"
-            secondary={
-              <Avatar 
-                alt="Assigned User" 
-                src="/static/images/avatar/1.jpg" 
-                sx={{ width: 25, height: 25, fontSize: 12, bgcolor: teal[200] }} 
-              />
-            }
-          />
+          <ListItemAvatar>
+            <Avatar 
+              alt="Assigned User" 
+              src="/static/images/avatar/1.jpg" 
+              sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200] }} 
+            />
+          </ListItemAvatar>
         </ListItem>,
       )}
     </List>
