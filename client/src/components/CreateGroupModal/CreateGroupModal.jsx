@@ -24,6 +24,7 @@ const modalStyle = {
 
 export default function CreateGroupModal({ open, onClose }) {
   const [title, setTitle] = useState('');
+  const [email, setEmail] = useState('');
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -57,16 +58,27 @@ export default function CreateGroupModal({ open, onClose }) {
         alignItems: 'center'
       }}
       >
-            <TextField
-              id="title"
-              label="title"
-              variant="outlined"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              sx={{ marginBottom: '1rem' }}
-              required
-              type="title"
-            />
+        <h4>Name the group?</h4>
+        <TextField
+          id="title"
+          label="title"
+          variant="outlined"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          sx={{ marginBottom: '1rem' }}
+          required
+          type="title"
+        />
+        <h4>Who would you like to invite?</h4>
+        <TextField
+          id="email"
+          label="Email Address"
+          variant="outlined"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          sx={{ marginBottom: '1rem' }}
+          type="email"
+        />
         <Button
           variant="contained"
           endIcon={<SendIcon />}
