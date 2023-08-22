@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
+import { lightBlue } from '@mui/material/colors';
 
 import Navbar from "../../components/Navbar/Navbar";
 import CreateInvitationModal from "../../components/CreateInvitationModal/CreateInvitationModal";
@@ -9,6 +10,7 @@ import CreateGroupModal from "../../components/CreateGroupModal/CreateGroupModal
 import styles from "./Settings.module.css";
 
 import Switch from '@mui/material/Switch';
+import { useSelector } from "react-redux";
 
 
 export default function Settings() {
@@ -26,6 +28,8 @@ export default function Settings() {
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
+  const user = useSelector(state => state.auth.user);
+
   return (
     <>
       <Navbar />
@@ -35,7 +39,10 @@ export default function Settings() {
           <h2>Invitation</h2>
           <div className={styles.section_wrapper}>
             <h3>Notification</h3>
-            <Avatar alt="Invited User" src="/static/images/avatar/1.jpg" />
+            <Avatar 
+              alt="Invited User" 
+              src="/static/images/avatar/1.jpg" 
+              sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} />
             <p>
               Hey! <i>invited user</i> ask you to join to <u>groupname</u>.
             </p>
@@ -65,14 +72,29 @@ export default function Settings() {
           </div>
         </div>
         <div className={styles.right_wrapper}>
-          <Avatar 
-            alt="Koshiro Kiyota" 
-            src="/static/images/avatar/1.jpg" 
-            className={styles.avatar_wrapper}
-            sx={{ width: 100, height: 100, fontSize: 48 }} 
-          />
-          <h2>Koshiro Kiyota</h2>
-          <p>koshiro@example.com</p>
+          
+          {user ? (
+            <>
+              <Avatar 
+                alt={user.username} 
+                src="/static/images/avatar/1.jpg" 
+                className={styles.avatar_wrapper}
+                sx={{ width: 100, height: 100, fontSize: 48, bgcolor: lightBlue[200] }}
+              />
+              <h2>{user.username}</h2>
+            </>
+          ) : (
+            <>
+              <Avatar 
+                alt='N' 
+                src="/static/images/avatar/1.jpg" 
+                className={styles.avatar_wrapper}
+                sx={{ width: 100, height: 100, fontSize: 48, bgcolor: lightBlue[100] }} 
+              />
+              <h2>NO USER</h2>
+            </>
+          )}
+          <p>mari@example.com</p>
           <div className={styles.groupbox}>Group A</div>
         </div>
         <CreateInvitationModal
