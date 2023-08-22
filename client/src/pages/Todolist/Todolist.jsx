@@ -41,7 +41,7 @@ export default function Todolist() {
 
   return (
 
-    <Box className={styles.main_wrapper} sx={{ flexGrow: 1, maxWidth: 752 }}>
+    <Box className={styles.main_wrapper} sx={{ flexGrow: 1, maxWidth: 1000 }}>
       <Navbar />
       <TodoCard />
 
