@@ -20,7 +20,7 @@ let createToken = (payload) => jwt.sign(payload, process.env.JWT, { expiresIn: "
 
 router.post("/signup", async (req, res) => {
   try {
-    const existingUser = await findUserByEmail(req.body.email);
+    const existingUser = await findUserByEmail(req.body.email).populate("group");
     if (existingUser) {
       return res.status(401).json({ message: "User Already Exist!" });
     }
@@ -32,27 +32,33 @@ router.post("/signup", async (req, res) => {
 
     // save the user
     const result = await user.save();
-    const token = createToken({ email: user.email, userId: user._id }); // token? 22/Aug/23 1:03:10
-    res.status(201).json({ message: "User created!", result, token }); // token? (koshiro memo 21/Aug/23 15:00:39)
+
+    const token = createToken({ email: result.email, userId: result._id });
+
+    console.log(token);
+    
+    res.status(201).json({ message: "User created!", user: result, token });
   } catch (err) {
     res.status(500).json({ error: err });
   }
 });
 
 router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const user = await findUserByEmail(req.body.email);
+    const user = await findUserByEmail(email).populate("group");
     if (!user) {
       return res.status(401).json({ message: "Auth failed no such user" });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
       return res.status(401).json({ message: "Auth failed incorrect password" });
     }
 
     const token = createToken({ email: user.email, userId: user._id });
-    res.status(200).json({ token, expiresIn: 7200, user: user }); // get user (koshiro memo 21/Aug/23 15:00:39)
+
+    res.status(200).json({ token, expiresIn: 7200, user: user });
   } catch (e) {
     console.log(e);
   }

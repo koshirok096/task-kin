@@ -22,7 +22,8 @@ const todoSchema = new mongoose.Schema({
     default: '',
     ref: 'User'
   },
-  status: { type: String, enum: ['inprogress', 'completed', 'created'], default: 'created' },
+  // enum: ['inprogress', 'completed', 'created'],
+  status: { type: String, default: 'created' },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

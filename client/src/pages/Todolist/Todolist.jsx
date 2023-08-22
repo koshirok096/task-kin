@@ -114,6 +114,10 @@ export default function Todolist() {
             primary="Assigned Member"
             secondary="Assigned member here"
           />
+          <ListItemText
+            primary="Description"
+            secondary="Description here"
+          />
         </ListItem>,
       )}
     </List>

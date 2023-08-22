@@ -50,7 +50,6 @@ router.post('/:invitationId/reject', verifyUser, async (req, res) => {
   await invitation.save();
   res.status(200).send('Invitation rejected');
 });
-
 router.get('/:email', async (req, res) => {
   const { email } = req.params;
   console.log(email);
@@ -68,4 +67,3 @@ router.delete("/:id", async (req, res) => {
 
 // module.exports = router;
 export default router;
-

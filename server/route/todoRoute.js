@@ -37,7 +37,7 @@ export const getGroupTodos = async (req, res) => {
   const { groupId } = req.params;
 
   try {
-    const todos = await Todo.find({ groupId });
+    const todos = await Todo.find({ groupId }).populate("assingTo");
     res.status(200).send(todos);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -77,8 +77,38 @@ export const deleteTodo = async (req, res) => {
   }
 }
 
+export const getCompletedTodos = async (req, res) => {
+  const { groupId } = req.params;
+
+  try {
+    const filter = {
+      status: "completed",
+    }
+    // const todos = await Todo.find({ groupId });
+    const todos = await Todo.find(filter); // empty array
+
+    res.status(200).send(todos);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const getInprogressTodos = async (req, res) => {
+  const { groupId } = req.params;
+
+  try {
+    const todos = await Todo.find({ groupId: groupId, status: "inprogress" });
+    res.status(200).send(todos);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 router.post('/create', verifyUser, addTodo);
-router.get('/:groupId', verifyUser, getGroupTodos);
+router.get('/:groupId', getGroupTodos); // verifyUser deleted 22/Aug/23 15:18:43
 router.put('/:id', verifyUser, updateTodo);
 router.delete('/:id', verifyUser, deleteTodo);
+router.get('/:id/completed', verifyUser, getCompletedTodos);
+router.get('/:id/inprogress', verifyUser, getInprogressTodos);
+
 export default router;

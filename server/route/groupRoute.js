@@ -46,6 +46,8 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get a group by id
+
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
