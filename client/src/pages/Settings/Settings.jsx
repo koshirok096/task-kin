@@ -76,7 +76,7 @@ export default function Settings() {
           {user ? (
             <>
               <Avatar 
-                alt={user.username} 
+                alt={user.username.toUpperCase()} 
                 src="/static/images/avatar/1.jpg" 
                 className={styles.avatar_wrapper}
                 sx={{ width: 100, height: 100, fontSize: 48, bgcolor: lightBlue[200] }}

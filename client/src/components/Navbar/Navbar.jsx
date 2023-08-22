@@ -155,7 +155,7 @@ export default function Navbar() {
               alignItems: 'center',
               margin: '1rem 0 1rem auto'
             }}>
-            <Avatar alt={user.username} src="/static/images/avatar/1.jpg" sx={{ bgcolor: lightBlue[200] }} />
+            <Avatar alt={user.username.toUpperCase()} src="/static/images/avatar/1.jpg" sx={{ bgcolor: lightBlue[200] }} />
             {/* <Avatar alt='someone' src="/static/images/avatar/1.jpg" /> */}
             {/* <p style={{margin:'0'}}>{user.username}</p> */}
             <button onClick={handleLogout}>Logout</button> {/* ログアウトボタン */}
