@@ -50,85 +50,85 @@ export default function AddTodoModal({ open, onClose }) {
         noValidate
         autoComplete="off"
       >
-    <div className={styles.form_wrapper}>
-      <h1>Add Todo</h1>
-      <form
-      //  onSubmit={handleSubmit}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-      >
-        <TextField
-          id="title"
-          label="Title"
-          variant="outlined"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          sx={{ marginBottom: '1rem' }}
-          required
-        />
-        <TextField
-          id="description"
-          label="Description"
-          variant="outlined"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          sx={{ marginBottom: '1rem' }}
-          required
-        />
-        <TextField
-          id="assignTo"
-          label="Assign To"
-          variant="outlined"
-          value={assignTo}
-          onChange={(e) => setAssignTo(e.target.value)}
-          sx={{ marginBottom: '1rem' }}
-        />
-<TextField
-  id="startDate"
-  label="Start Date"
-  variant="outlined"
-  type="date"
-  value={startDate}
-  onChange={(e) => setStartDate(e.target.value)}
-  sx={{ marginBottom: '1rem' }}
-  required
-  InputLabelProps={{
-    shrink: true,
-  }}
-  inputProps={{
-    placeholder: '', // Set an empty placeholder
-  }}
-/>
-<TextField
-  id="endDate"
-  label="End Date"
-  variant="outlined"
-  type="date"
-  value={endDate}
-  onChange={(e) => setEndDate(e.target.value)}
-  sx={{ marginBottom: '1rem' }}
-  required
-  InputLabelProps={{
-    shrink: true,
-  }}
-  inputProps={{
-    placeholder: '', // Set an empty placeholder
-  }}
-/>
-        <Button
-          variant="contained"
-          endIcon={<SendIcon />}
-          sx={{ marginTop: '1rem' }}
-          type="submit"
-        >
-          Add
-        </Button>
-      </form>
-    </div>
+        <div className={styles.form_wrapper}>
+          <h1>Add Todo</h1>
+          <form
+          //  onSubmit={handleSubmit}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          >
+            <TextField
+              id="title"
+              label="Title"
+              variant="outlined"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+            />
+            <TextField
+              id="description"
+              label="Description"
+              variant="outlined"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+            />
+            <TextField
+              id="assignTo"
+              label="Assign To"
+              variant="outlined"
+              value={assignTo}
+              onChange={(e) => setAssignTo(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+            />
+            <TextField
+              id="startDate"
+              label="Start Date"
+              variant="outlined"
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                placeholder: '', // Set an empty placeholder
+              }}
+            />
+            <TextField
+              id="endDate"
+              label="End Date"
+              variant="outlined"
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                placeholder: '', // Set an empty placeholder
+              }}
+            />
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              sx={{ marginTop: '1rem' }}
+              type="submit"
+            >
+              Add
+            </Button>
+          </form>
+        </div>
       </Box>
       </Modal>
     );
