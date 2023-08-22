@@ -2,6 +2,11 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+
+import styles from "./UpdateTodoModal.module.css";
 
 const modalStyle = {
   position: 'absolute',
@@ -19,12 +24,91 @@ export default function UpdateTodoModal({ open, onClose }) {
     return (
       <Modal open={open} onClose={onClose}>
         <Box sx={modalStyle}>
-          <Typography variant="h6" component="h2">
+          {/* <Typography variant="h6" component="h2">
             Update Todo
           </Typography>
           <Typography sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          </Typography> */}
+          <div className={styles.form_wrapper}>
+          <h1>Edit Todo</h1>
+          <form
+          //  onSubmit={handleSubmit}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          >
+            <TextField
+              id="title"
+              label="Title"
+              variant="outlined"
+              // value={title}
+              // onChange={(e) => setTitle(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+            />
+            <TextField
+              id="description"
+              label="Description"
+              variant="outlined"
+              // value={description}
+              // onChange={(e) => setDescription(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+            />
+            <TextField
+              id="assignTo"
+              label="Assign To"
+              variant="outlined"
+              // value={assignTo}
+              // onChange={(e) => setAssignTo(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+            />
+            <TextField
+              id="startDate"
+              label="Start Date"
+              variant="outlined"
+              type="date"
+              // value={startDate}
+              // onChange={(e) => setStartDate(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                placeholder: '', // Set an empty placeholder
+              }}
+            />
+            <TextField
+              id="endDate"
+              label="End Date"
+              variant="outlined"
+              type="date"
+              // value={endDate}
+              // onChange={(e) => setEndDate(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+              required
+              InputLabelProps={{
+                shrink: true,
+              }}
+              inputProps={{
+                placeholder: '', // Set an empty placeholder
+              }}
+            />
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              sx={{ marginTop: '1rem' }}
+              type="submit"
+            >
+              Add
+            </Button>
+          </form>
+        </div>
         </Box>
       </Modal>
     );
