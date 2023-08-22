@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
+import { teal } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -102,17 +103,24 @@ export default function Todolist() {
           {/* Start Date */}
           <ListItemText
             primary="Start Date"
-            secondary="Start date here"
+            secondary="2023/8/22"
           />
           {/* End Date */}
           <ListItemText
             primary="End Date"
-            secondary="End date here"
+            secondary="2023/8/25"
           />
           {/* Assigned Member */}
           <ListItemText
-            primary="Assigned Member"
-            secondary="Assigned member here"
+            primary="Assigned To"
+            // secondary="Assigned member here"
+            secondary={
+              <Avatar 
+                alt="Assigned User" 
+                src="/static/images/avatar/1.jpg" 
+                sx={{ width: 25, height: 25, fontSize: 12, bgcolor: teal[200] }} 
+              />
+            }
           />
         </ListItem>,
       )}
