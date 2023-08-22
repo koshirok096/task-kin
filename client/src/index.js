@@ -1,14 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from "./store.js"
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store'; // ファイルの相対パスを適宜修正
+import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <Provider store={store}>
-    <App />
-  </Provider>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
+  document.getElementById('root')
 );
-

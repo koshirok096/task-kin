@@ -24,10 +24,14 @@ const authSlice = createSlice({
         loginFailure(state, action) {
             state.loading = false;
             state.error = action.payload;
+        },
+        logout(state) {
+            state.user = null;
+            state.token = null;
         }
     }
 });
 
-export const { loginStart, loginSuccess, loginFailure } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 export default authSlice.reducer;

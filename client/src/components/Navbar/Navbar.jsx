@@ -26,9 +26,10 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import styles from "./Navbar.module.css";
 
 import mainLogo from "../../images/main-logo.png"; // Tell webpack this JS file uses this image
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../slices/authSlice"; // authSliceからlogoutアクションをインポート
 
 
 const drawerWidth = 240;
@@ -101,6 +102,9 @@ const Drawer = styled(MuiDrawer, {
 export default function Navbar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch(); // useDispatch フックを使用
+  const navigate = useNavigate();
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -108,6 +112,11 @@ export default function Navbar() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
   };
 
   const user = useSelector(state => state.auth.user);
@@ -148,6 +157,7 @@ export default function Navbar() {
             {/* <Avatar alt={user.username} src="/static/images/avatar/1.jpg" /> */}
             <Avatar alt='someone' src="/static/images/avatar/1.jpg" />
             {/* <p style={{margin:'0'}}>{user.username}</p> */}
+            <button onClick={handleLogout}>Logout</button> {/* ログアウトボタン */}
           </div>
         </Toolbar>
       </AppBar>
