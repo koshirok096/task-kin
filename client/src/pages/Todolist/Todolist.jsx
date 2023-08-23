@@ -45,8 +45,6 @@ export default function Todolist() {
       <Navbar />
       <TodoCard />
 
-
-
           {/* speeddial */}
 
         <Box sx={{ height: 160, transform: 'translateZ(0px)', flexGrow: 1 }}>

@@ -35,9 +35,12 @@ export default function TodoCard() {
   const todos = useSelector(state => state.todo.todos);
 
   const [inProgressTodos, setInProgressTodos] = useState([]);
+  const [AssignedMember, setAssignedMember] = useState([]);
+
 
   useEffect(() => {
     getInProgressTodos();
+    getAssignedMember();
   }, []);
 
   const getInProgressTodos = async () => {
@@ -63,23 +66,41 @@ export default function TodoCard() {
   };
 
   //
-
-  const getAssignedMember = async (todo) => {
-    console.log('hwoehfwef', todo.assingTo);
+  const getAssignedMember = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/auth/${todo.assingTo}`, {
+      const response = await fetch(`http://localhost:3001/auth/${user.username}`, {
         headers: {
           Authorization: `${token}`
         }
       });
       const member = await response.json();
-      console.log('Assigned Member:', member);
-      return member;
+      setAssignedMember(member);
+      console.log('member is :', member);
     } catch (error) {
       console.error("An error occurred:", error);
-      return null;
     }
   };
+
+  const handleDeleteTodoClick = async (todoId) => {
+    try {
+      const response = await fetch(`http://localhost:3001/todo/${todoId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `${token}`
+        }
+      });
+
+      if (response.ok) {
+        // ToDo 削除が成功した場合に、更新された ToDo リストを取得して表示
+        getInProgressTodos();
+      } else {
+        console.error("Failed to delete ToDo.");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
   
 
   return (
@@ -111,9 +132,9 @@ export default function TodoCard() {
           Avatar with text and icon
         </Typography>
         <List dense={dense}>
-        {inProgressTodos.map((todo, index) => (
+          {inProgressTodos.map((todo, index) => (
             <div key={index} className={styles.todolist_wrapper}>
-            <div className={styles.todo_header_wrapper}>
+              <div className={styles.todo_header_wrapper}>
                 <ListItemAvatar>
                   <TaskAltIcon sx={{ color: indigo[500] }} />
                 </ListItemAvatar>
@@ -128,11 +149,10 @@ export default function TodoCard() {
                 <IconButton aria-label="edit">
                   <EditIcon onClick={handleUpdateTodoClick} />
                 </IconButton>
-                <IconButton  aria-label="delete">
-                  <DeleteIcon 
-                    // onClick={handleDeleteTodoClick} 
-                  />
+                <IconButton aria-label="delete">
+                  <DeleteIcon onClick={() => handleDeleteTodoClick(todo._id)} />
                 </IconButton>
+
               </div>
               <div className={styles.details_wrapper}>
                 {/* Start Date */}

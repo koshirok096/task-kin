@@ -23,11 +23,12 @@ const todoSchema = new mongoose.Schema({
     ref: 'User'
   },
   // enum: ['inprogress', 'completed', 'created'],
-  status: { type: String, default: 'created' },
+  status: { type: String, default: 'inprogress' },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    default: '',
     ref: 'User',
-    required: true
   },
   startDate: {
     type: Date,

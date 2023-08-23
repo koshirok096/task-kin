@@ -7,7 +7,7 @@ const router = express.Router();
 // ADD
 export const addTodo = async (req, res) => {
   const { id } = req.user;
-  const { title, description, groupId, assingTo, startDate, endDate } = req.body;
+  const { title, description, groupId, assingTo, createdBy, startDate, endDate } = req.body;
 
   if (!title) return res.status(400).send("Title is required");
   if (!description) return res.status(400).send("Description is required");
@@ -23,7 +23,7 @@ export const addTodo = async (req, res) => {
       assingTo,
       startDate,
       endDate,
-      createdBy: id,
+      createdBy,
     });
     await todo.save();
     res.status(201).send(todo);
