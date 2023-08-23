@@ -75,7 +75,7 @@ export default function TodoCard() {
       });
       const member = await response.json();
       setAssignedMember(member);
-      console.log('member is :', member);
+      // console.log('member is :', member);
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -146,11 +146,11 @@ export default function TodoCard() {
                 }
                 secondary={secondary ? todo.description : ''}
               />
-                <IconButton aria-label="edit">
-                  <EditIcon onClick={handleUpdateTodoClick} />
+                <IconButton onClick={handleUpdateTodoClick} aria-label="edit">
+                  <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete">
-                  <DeleteIcon onClick={() => handleDeleteTodoClick(todo._id)} />
+                <IconButton onClick={() => handleDeleteTodoClick(todo._id)} aria-label="delete">
+                  <DeleteIcon  />
                 </IconButton>
 
               </div>

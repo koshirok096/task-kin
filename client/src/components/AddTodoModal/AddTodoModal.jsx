@@ -4,10 +4,15 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
 import { Link } from 'react-router-dom'; // Include useNavigate and useLocation
 
 import Modal from '@mui/material/Modal';
 import styles from "./AddTodoModal.module.css";
+
+import { useSelector } from "react-redux";
 
 
 const modalStyle = {
@@ -29,17 +34,58 @@ export default function AddTodoModal({ open, onClose }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Handle form submission here, e.g., dispatch an action to create the todo item
-  // };
+  const user = useSelector(state => state.auth.user);
+  const token = useSelector(state => state.auth.token);
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const data = {
+      title,
+      description,
+      groupId: user.group[0], // Use actual user's groupId from Redux
+      assignTo: user.userId, // Use actual user's userId from Redux
+      startDate,
+      endDate,
+      createdBy: user.userId, // Use actual user's userId from Redux
+    };
+    console.log('fheowhoiehfwife', data);
+    console.log('aaaaaaaajpapajpa', user.userId);
+    try {
+      const response = await fetch('http://localhost:3001/todo/create', {
+        method: 'POST',
+        headers: {
+          Authorization: `${token}`, // Make sure to add "Bearer" before token
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (response.ok) {
+        console.log('Todo added successfully');
+        onClose();
+      } else {
+        console.error('Failed to add todo');
+      }
+    } catch (error) {
+      console.error('An error occurred', error);
+    }
+  };
+  
+  // test
+  const users = [
+    { userId: 1, name: 'User 1' },
+    { userId: 2, name: 'User 2' },
+    { userId: 3, name: 'User 3' },
+    // ... and so on
+  ];
 
     return (
       <Modal open={open} onClose={onClose}>
         <Box
           className={styles.main_wrapper}
-          component="form"        
+          // component="form"        
          sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -53,7 +99,7 @@ export default function AddTodoModal({ open, onClose }) {
         <div className={styles.form_wrapper}>
           <h1>Add Todo</h1>
           <form
-          //  onSubmit={handleSubmit}
+           onSubmit={handleSubmit}
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -79,14 +125,30 @@ export default function AddTodoModal({ open, onClose }) {
               sx={{ marginBottom: '1rem' }}
               required
             />
-            <TextField
+            {/* <TextField
               id="assignTo"
               label="Assign To"
               variant="outlined"
               value={assignTo}
               onChange={(e) => setAssignTo(e.target.value)}
               sx={{ marginBottom: '1rem' }}
-            />
+            /> */}
+            <Select
+              id="assignTo"
+              label="Assign To"
+              variant="outlined"
+              value={assignTo}
+              onChange={(e) => setAssignTo(e.target.value)}
+              sx={{ marginBottom: '1rem' }}
+            >
+              {/* Map over your user data to generate MenuItems */}
+              {users.map((user) => (
+                <MenuItem key={user.userId} value={user.userId}>
+                  {user.name} {/* Display the user's name */}
+                </MenuItem>
+              ))}
+            </Select>
+
             <TextField
               id="startDate"
               label="Start Date"

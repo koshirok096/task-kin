@@ -5,11 +5,16 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store'; // ファイルの相対パスを適宜修正
 import App from './App';
 
-ReactDOM.render(
+// createRoot を react-dom/client からインポートする
+import { createRoot } from 'react-dom/client';
+
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
+root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <App />
     </PersistGate>
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 );
