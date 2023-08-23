@@ -95,7 +95,7 @@ export default function TodoCard() {
                   <Avatar 
                     alt="Assigned User" 
                     src="/static/images/avatar/1.jpg" 
-                    sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 4 }} 
+                    sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
                   />
                 </ListItemAvatar>
               </div>
