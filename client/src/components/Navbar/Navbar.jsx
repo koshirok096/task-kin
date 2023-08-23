@@ -7,8 +7,11 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
+import Tooltip from '@mui/material/Tooltip';
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -20,6 +23,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import Avatar from '@mui/material/Avatar';
 import { lightBlue } from '@mui/material/colors';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -120,6 +126,15 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openanchor = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const user = useSelector(state => state.auth.user);
   // const token = useSelector(state => state.auth.token);
 
@@ -135,7 +150,7 @@ export default function Navbar() {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: "none" }),
+              ...(openanchor && { display: "none" }),
             }}>
             <MenuIcon />
           </IconButton>
@@ -147,22 +162,101 @@ export default function Navbar() {
             <img className={styles.header_img} src={mainLogo} alt="Logo" />
             Task-Kin
           </Typography>
-          <div 
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: '1rem 0 1rem auto'
-            }}>
-            <Avatar alt={user.username.toUpperCase()} src="/static/images/avatar/1.jpg" sx={{ bgcolor: lightBlue[200] }} />
-            {/* <Avatar alt='someone' src="/static/images/avatar/1.jpg" /> */}
-            {/* <p style={{margin:'0'}}>{user.username}</p> */}
-            <button onClick={handleLogout}>Logout</button> {/* ログアウトボタン */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: '1rem 0 1rem auto'
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+              <Typography sx={{ minWidth: 100 }}>Contact</Typography>
+              <Typography sx={{ minWidth: 100 }}>Profile</Typography>
+              <Tooltip title="Account settings">
+                <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={openanchor ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openanchor ? 'true' : undefined}
+                >
+                  <Avatar 
+                    alt={user.username.toUpperCase()}
+                    src="/static/images/avatar/1.jpg"
+                    sx={{ width: 32, height: 32, bgcolor: lightBlue[200] }}>
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+            </Box>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={openanchor}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+              <Link to="/settings">
+                <MenuItem onClick={handleClose}>
+                  <Avatar /> Profile
+                </MenuItem>
+              </Link>
+              <Divider />
+              <Link to="/settings">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  Add member to your group
+                </MenuItem>
+              </Link>
+              <Link to="/settings">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  Settings
+                </MenuItem>
+              </Link>
+              <MenuItem onClick={handleClose, handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -174,86 +268,89 @@ export default function Navbar() {
         </DrawerHeader>
         <Divider />
 
-        <List>
-        <Link to="/">          
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}>
-              <ListItemIcon
+
+        {/* SIDEBAR */}
+
+        <List className={styles.sidebar}>
+          <Link to="/">
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
           </Link>
-          <Link to="/todolist">          
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}>
-              <ListItemIcon
+          <Link to="/todolist">
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}>
-                <FormatListBulletedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Todo" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}>
+                  <FormatListBulletedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Todo" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
           </Link>
-          <Link to="/calendar">          
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}>
-              <ListItemIcon
+          <Link to="/calendar">
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}>
-                <CalendarMonthIcon />
-              </ListItemIcon>
-              <ListItemText primary="Calendar" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}>
+                  <CalendarMonthIcon />
+                </ListItemIcon>
+                <ListItemText primary="Calendar" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
           </Link>
-          <Link to="/settings">          
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}>
-              <ListItemIcon
+          <Link to="/settings">
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}>
-                <ManageAccountsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}>
+                  <ManageAccountsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
           </Link>
         </List>
         <Divider />

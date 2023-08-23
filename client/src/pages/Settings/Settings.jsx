@@ -42,7 +42,8 @@ export default function Settings() {
             <Avatar 
               alt="Invited User" 
               src="/static/images/avatar/1.jpg" 
-              sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} />
+              sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} 
+            />
             <p>
               Hey! <i>invited user</i> ask you to join to <u>groupname</u>.
             </p>
