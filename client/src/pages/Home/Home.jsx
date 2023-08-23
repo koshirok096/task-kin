@@ -24,39 +24,39 @@ const Home = () => {
     <div className={styles.layout}>
       <Navbar />
 
-      <div>Home</div>
-      <h2>Welcome to the Top Page</h2>
-      {user ? (
-        <>
-          <p>Hello, {user.username}!</p>
-          {/* if login user already joined group, it shows group name. If not, it says "you are not joined any group yet"
-          Numbers of tasks (except compeleted tasks) user has.
-          Numbers of pending invitation user has. */}
-        <p>YOUR GROUP: {user.group}</p>
-          <p>Numbers of Remain Tasks : 17</p>
-          <p>Numbers of Remain Invitation : 2</p>
+      <div className={styles.content}>
+        <h2 className={styles.title}>Welcome to the Top Page</h2>
+        {user ? (
+          <div className={styles.userInfo}>
+            <p>Hello, {user.username}!</p>
+            <p>YOUR GROUP: {user.group}</p>
+            <p>Numbers of Remain Tasks: 17</p>
+            <p>Numbers of Remain Invitation: 2</p>
+          </div>
+        ) : (
+          <p className={styles.notLoggedIn}>Please log in to see your information.</p>
+        )}
 
-          {/* <button onClick={handleLogout}>Logout</button> */}
-        </>
-      ) : (
-        <p></p>
-      )}
-      
-      {/* 他のコンテンツや情報を表示 */}
-
-      <nav style={{ marginLeft: "30vw" }}>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login Page</Link>
-          </li>
-          <li>
-            <Link to="/signup">Signup</Link>
-          </li>
-        </ul>
-      </nav>
+        <nav className={styles.navLinks}>
+          <ul>
+            <li>
+              <Link to="/" className={styles.navLink}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className={styles.navLink}>
+                Login Page
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup" className={styles.navLink}>
+                Signup
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

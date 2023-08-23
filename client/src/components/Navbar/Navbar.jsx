@@ -186,10 +186,7 @@ export default function Navbar() {
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
                 color: 'black', // Cor do texto
-                textDecoration: 'none', // Remover sublinhado
-                '&:hover': {
-                  textDecoration: 'none', // Remover sublinhado ao passar o mouse
-                },
+                
               }}
             >
               <ListItemIcon
@@ -211,6 +208,7 @@ export default function Navbar() {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                color: 'black',
               }}>
               <ListItemIcon
                 sx={{
@@ -231,12 +229,14 @@ export default function Navbar() {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                color: 'black',
               }}>
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  
                 }}>
                 <CalendarMonthIcon />
               </ListItemIcon>
@@ -251,6 +251,7 @@ export default function Navbar() {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                color: 'black',
               }}>
               <ListItemIcon
                 sx={{
