@@ -246,7 +246,7 @@ export default function Navbar() {
                   Settings
                 </MenuItem>
               </Link>
-              <MenuItem onClick={handleClose, handleLogout}>
+              <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
