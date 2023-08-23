@@ -6,6 +6,8 @@ import styles from "./Home.module.css"
 
 const Home = () => {
   const user = useSelector(state => state.auth.user);
+    const token = useSelector(state => state.auth.token);
+
   const [group, setGroup] = useState(null);
   const [uncompletedTodos, setUncompletedTodos] = useState(null);
   const [remainingInvitation, setRemainingInvitation] = useState(null);
@@ -26,20 +28,40 @@ const Home = () => {
     }
   };
 
+  // const getGroup = async () => {
+  //   try {
+  //     const response = await fetch(`http://localhost:3001/group/${user.group[0]}`);
+  //     const data = await response.json();
+  //     console.log("Fetched group data:", data); // コンソールでデータを確認
+  //     setGroup(data);
+  //   } catch (error) {
+  //     console.error("An error occurred:", error);
+  //   }
+  // };
+
   const getGroup = async () => {
+    console.log('your token is :', token );
     try {
-      const response = await fetch(`http://localhost:3001/group/${user.group[0]}`);
+      const response = await fetch(`http://localhost:3001/group/${user.group[0]}`, {
+        headers: {
+          Authorization: `${token}` // Here
+        }
+      });
       const data = await response.json();
-      console.log("Fetched group data:", data); // コンソールでデータを確認
+      console.log("Fetched group data:", data);
       setGroup(data);
     } catch (error) {
       console.error("An error occurred:", error);
     }
-  };
+  };  
 
   const getUncompletedTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`);
+      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`, {
+        headers: {
+          Authorization: `${token}` // ここに実際のトークンを追加
+        }
+      });
       const todo = await response.json();
       console.log("Fetched group todo:", todo); // コンソールでデータを確認
       setUncompletedTodos(todo);
@@ -50,7 +72,11 @@ const Home = () => {
 
   const getRemainingInvitation = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/invite/${user.email}`);
+      const response = await fetch(`http://localhost:3001/invite/${user.email}`, {
+        headers: {
+          Authorization: `${token}` // ここに実際のトークンを追加
+        }
+      });
       const invitations = await response.json();
 
       // フィルタリング: invitation.status が 'pending' のものだけ取得

@@ -64,6 +64,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// 
 router.get("/:id", async (req, res) => {
   try {
     const user = await findUserByUsername(req.params.id);

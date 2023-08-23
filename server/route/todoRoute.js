@@ -32,6 +32,7 @@ export const addTodo = async (req, res) => {
     return res.status(400).send(error.message);
   }
 }
+
 //GET
 export const getGroupTodos = async (req, res) => {
   const { groupId } = req.params;
@@ -77,6 +78,7 @@ export const deleteTodo = async (req, res) => {
   }
 }
 
+// GET Completed
 export const getCompletedTodos = async (req, res) => {
   const { groupId } = req.params;
 
@@ -93,22 +95,24 @@ export const getCompletedTodos = async (req, res) => {
   }
 };
 
+// GET InProgress
 export const getInprogressTodos = async (req, res) => {
   const { groupId } = req.params;
-
+  console.log(groupId);
   try {
     const todos = await Todo.find({ groupId: groupId, status: "inprogress" });
+    // console.log("Fetched inprogress todos:", todos);
     res.status(200).send(todos);
   } catch (error) {
     return res.status(500).send(error.message);
   }
 };
 
-router.post('/create', addTodo);
-router.get('/:groupId', getGroupTodos); // verifyUser deleted 22/Aug/23 15:18:43
+router.post('/create', verifyUser, addTodo);
+router.get('/:groupId', verifyUser, getGroupTodos);
 router.put('/:id', verifyUser, updateTodo);
 router.delete('/:id', verifyUser, deleteTodo);
-router.get('/:id/completed', verifyUser, getCompletedTodos);
-router.get('/:id/inprogress', getInprogressTodos);
+router.get('/:groupId/completed', verifyUser, getCompletedTodos); // initial Kubi's code was '/:id/completed', but I changed (not sure is it correct or not) 23/Aug/23 1:53:05
+router.get('/:groupId/inprogress', verifyUser, getInprogressTodos);// same
 
 export default router;
