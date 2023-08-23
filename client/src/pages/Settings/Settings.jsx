@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { lightBlue } from '@mui/material/colors';
 
+
 import Navbar from "../../components/Navbar/Navbar";
 import CreateInvitationModal from "../../components/CreateInvitationModal/CreateInvitationModal";
 import CreateGroupModal from "../../components/CreateGroupModal/CreateGroupModal";
@@ -11,6 +12,29 @@ import styles from "./Settings.module.css";
 
 import Switch from '@mui/material/Switch';
 import { useSelector } from "react-redux";
+
+
+
+// const handleAcceptInvitation = async (invitationId) => {
+//   const status = await getInvitationStatus(invitationId);
+//   if (status === 'pending') {
+//     // Lógica para aceitar o convite aqui
+//   } else {
+//     // O convite já foi aceito, então você pode exibir uma mensagem
+//     console.log('Invitation already accepted');
+//   }
+// };
+
+
+// const handleDeclineInvitation = async (invitationId) => {
+//   const status = await getInvitationStatus(invitationId);
+//   if (status === 'pending') {
+//     // Lógica para recusar o convite aqui
+//   } else {
+//     // O convite já foi aceito ou recusado, então você pode exibir uma mensagem
+//     console.log('Invitation already accepted or declined');
+//   }
+// };
 
 
 export default function Settings() {

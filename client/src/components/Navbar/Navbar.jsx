@@ -124,7 +124,7 @@ export default function Navbar() {
   // const token = useSelector(state => state.auth.token);
 
   return (
-    <Box sx={{ display: "flex", alignItems:"center", justifyContent:"center", width: "100%"}}>
+    <Box sx={{ display: "flex", alignItems:"center", justifyContent:"center", width: "100%",  textDecoration:"none" }}>
      
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -178,12 +178,20 @@ export default function Navbar() {
         <List>
         <Link to="/">          
           <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
+          <ListItemButton
+              component={Link} // Use o componente Link em vez do componente ListItemButton
+              to="/" // Adicione o atributo "to" para especificar o destino do link
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
-              }}>
+                color: 'black', // Cor do texto
+                textDecoration: 'none', // Remover sublinhado
+                '&:hover': {
+                  textDecoration: 'none', // Remover sublinhado ao passar o mouse
+                },
+              }}
+            >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
@@ -192,7 +200,7 @@ export default function Navbar() {
                 }}>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0}} />
             </ListItemButton>
           </ListItem>
           </Link>

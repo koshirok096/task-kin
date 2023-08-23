@@ -66,6 +66,19 @@ router.delete("/:id", async (req, res) => {
 });
 
 
+router.get("/invitationId/pending", async function getInvitationStatus(invitationId) {
+  try {
+    const invitation = await Invitation.findById(invitationId);
+    if (!invitation) {
+      return "Invalid invitation ID";
+    }
+    
+    return invitation.status === "pending" ? "pending" : "accepted";
+  } catch (error) {
+    return "Error fetching invitation status";
+  }
+} )
+
 // module.exports = router;
 export default router;
 
