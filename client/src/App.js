@@ -16,6 +16,8 @@ import Calendar from "./pages/Calendar/Calendar";
 import Settings from "./pages/Settings/Settings";
 import Signup from "./pages/Signup/Signup";
 
+import Navbar from "./components/Navbar/Navbar";
+
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.token !== null); // Redux ストアからログイン状態を取得
 
@@ -54,6 +56,7 @@ function App() {
       </Helmet>
 
       <Router>
+      {isLoggedIn && <Navbar />}
         <Routes>
           <Route
             path="/"

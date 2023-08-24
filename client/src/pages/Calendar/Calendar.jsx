@@ -40,8 +40,6 @@ export default function Calendar() {
 
   return (
     <div className={styles.main_wrapper}>
-      <Navbar />
-
       <BigCalendar
         localizer={localizer}
         defaultDate={new Date()}

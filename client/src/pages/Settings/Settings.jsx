@@ -16,7 +16,7 @@ import axios from "axios"; // Import Axios for making HTTP requests
 
 
 
-export default function Settings() {
+export default function Settings({ remainingInvitation, uncompletedTodos }) {
   const [OpenCreateInvitationModal, setOpenCreateInvitationModal] =
     React.useState(false);
   const handleCreateInvitationClick = () => setOpenCreateInvitationModal(true);
@@ -57,7 +57,6 @@ export default function Settings() {
 
   return (
     <>
-      <Navbar />
       <Box className={styles.main_wrapper}>
         {/* <div>Settings</div> */}
         <div className={styles.left_wrapper}>
@@ -94,7 +93,7 @@ export default function Settings() {
           </div>
           <h2>Settings</h2>
           <div className={styles.switch_wrapper}>
-          <Switch {...label} defaultUnchecked />
+          <Switch {...label} />
             Enable Darkmode
           </div>
         </div>

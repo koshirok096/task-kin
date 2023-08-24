@@ -37,3 +37,22 @@
   }
 }
 
+a {
+  text-decoration:none;
+  color:inherit;
+}
+
+body{
+  /*要素の高さを指定*/
+  /* height: 300px; */
+  /*上下方向にはみ出した要素ををスクロールさせる*/
+  overflow-y: scroll;
+  /*スクロールバー非表示（IE・Edge）*/
+  -ms-overflow-style: none;
+  /*スクロールバー非表示（Firefox）*/
+  scrollbar-width: none;
+}
+/*スクロールバー非表示（Chrome・Safari）*/
+body::-webkit-scrollbar{
+  display:none;
+}
