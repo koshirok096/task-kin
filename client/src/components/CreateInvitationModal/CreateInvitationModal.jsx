@@ -45,7 +45,14 @@ export default function CreateInvitationModal({ open, onClose, groupInfo }) {
   };
 
   const createInvitation = async () => {
+
+
+
     try {
+
+      // check user by email/ axios get user by email
+      // if user exists and group array is empty, add group to user
+
       const response = await axios.post(`http://localhost:3001/invite/${groupInfo}`, {
         email: email
       }, {
