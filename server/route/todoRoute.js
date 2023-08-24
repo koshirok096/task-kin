@@ -108,11 +108,24 @@ export const getInprogressTodos = async (req, res) => {
   }
 };
 
+export const getTodoById = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  
+  try {
+    const response = await Todo.findById(id);
+    return res.status(200).send(response);
+
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 router.post('/create', verifyUser, addTodo);
 router.get('/:groupId', verifyUser, getGroupTodos);
 router.put('/:id', verifyUser, updateTodo);
 router.delete('/:id', verifyUser, deleteTodo);
 router.get('/:groupId/completed', verifyUser, getCompletedTodos); // initial Kubi's code was '/:id/completed', but I changed (not sure is it correct or not) 23/Aug/23 1:53:05
 router.get('/:groupId/inprogress', verifyUser, getInprogressTodos);// same
-
+router.get("/read/:id", verifyUser, getTodoById);
 export default router;

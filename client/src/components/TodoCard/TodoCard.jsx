@@ -27,12 +27,13 @@ export default function TodoCard() {
 
   const [OpenUpdateModal, setOpenUpdateModal] = React.useState(false);
 
-  const handleUpdateTodoClick = () => setOpenUpdateModal(true);
   const handleUpdateTodoClose = () => setOpenUpdateModal(false);
 
   const user = useSelector(state => state.auth.user);
   const token = useSelector(state => state.auth.token);
   const todos = useSelector(state => state.todo.todos);
+
+  const [selectedTodo, setSelectedTodo] = useState(null);
 
   const [inProgressTodos, setInProgressTodos] = useState([]);
   const [AssignedMember, setAssignedMember] = useState([]);
@@ -42,6 +43,11 @@ export default function TodoCard() {
     getInProgressTodos();
     getAssignedMember();
   }, []);
+
+  const handleUpdateTodo = async (todoId) => {
+    setOpenUpdateModal(true);
+    setSelectedTodo(todoId);
+  };
 
   const getInProgressTodos = async () => {
     try {
@@ -146,7 +152,7 @@ export default function TodoCard() {
                 }
                 secondary={secondary ? todo.description : ''}
               />
-                <IconButton onClick={handleUpdateTodoClick} aria-label="edit">
+                <IconButton onClick={() => handleUpdateTodo(todo._id)} aria-label="edit">
                   <EditIcon />
                 </IconButton>
                 <IconButton onClick={() => handleDeleteTodoClick(todo._id)} aria-label="delete">
@@ -178,9 +184,7 @@ export default function TodoCard() {
           ))}
         </List>
       </Grid>
-      <UpdateTodoModal open={OpenUpdateModal} onClose={handleUpdateTodoClose} />
-
-
+      <UpdateTodoModal open={OpenUpdateModal} todoId={selectedTodo} onClose={handleUpdateTodoClose} />
     </>
   )
 }
