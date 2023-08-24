@@ -124,13 +124,13 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               placeholder=""
             />
             {/* <TextField
-              id="assignTo"
-              label="Assign To"
+              id="assignedTo"
+              label="Assigned To"
               variant="outlined"
               placeholder={todo?.assignedTo}
               onChange={(e) => handleChanges(e)}
-              // value={assignTo}
-              // onChange={(e) => setAssignTo(e.target.value)}
+              // value={assignedTo}
+              // onChange={(e) => setAssignedTo(e.target.value)}
               sx={{ marginBottom: '1rem' }}
             /> */}
             {/* <TextField
