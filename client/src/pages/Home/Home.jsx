@@ -111,7 +111,7 @@ const Home = () => {
     <div className={styles.layout}>
       {user ? (
         <>
-          <h2>{greeting}, {user.username}!</h2>
+          <h2>{greeting}, {user?.username}!</h2>
           <h3 style={{color: 'gray'}}>Family and work are the twin pillars of a balanced life.</h3>
           <p>YOUR GROUP: {group ? group?.name : "No group yet"}</p>
           <p>Numbers of Remain Tasks : {uncompletedTodos ? uncompletedTodos.length : '0'}</p>

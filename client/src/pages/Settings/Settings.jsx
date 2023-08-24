@@ -112,12 +112,12 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
         </div>
         <div className={styles.right_wrapper}>
           <Avatar 
-            alt={user.username.toUpperCase()} 
+            alt={user?.username.toUpperCase()} 
             src="/static/images/avatar/1.jpg" 
             className={styles.avatar_wrapper}
             sx={{ width: 100, height: 100, fontSize: 48, bgcolor: lightBlue[200] }}
           />
-          <h2>{user.username}</h2>
+          <h2>{user?.username}</h2>
           <p>{user.email}</p>
           <div className={styles.groupbox}>Group A</div>
         </div>

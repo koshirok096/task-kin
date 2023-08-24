@@ -176,7 +176,7 @@ export default function AddTodoModal({ open, onClose }) {
               {/* Map over your user data to generate MenuItems */}
               {members.map((member) => (
                 <MenuItem key={member._id} value={member._id}>
-                  {member.username}{/* Display the user's name */}
+                  {member?.username}{/* Display the user's name */}
                 </MenuItem>
               ))}
             </Select>

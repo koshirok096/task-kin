@@ -68,7 +68,7 @@ export default function TodoCard() {
   //
   const getAssignedMember = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/auth/${user.username}`, {
+      const response = await fetch(`http://localhost:3001/auth/${user?.username}`, {
         headers: {
           Authorization: `${token}`
         }

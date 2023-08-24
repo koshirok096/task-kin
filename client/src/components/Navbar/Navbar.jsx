@@ -272,7 +272,7 @@ const Navbar = React.memo(() => {
                   aria-haspopup="true"
                   aria-expanded={openanchor ? "true" : undefined}>
                   <Avatar
-                    alt={user.username.toUpperCase()}
+                    alt={user?.username.toUpperCase()}
                     src="/static/images/avatar/1.jpg"
                     sx={{
                       width: 32,
@@ -328,7 +328,7 @@ const Navbar = React.memo(() => {
                       marginLeft: "1rem",
                     }}>
                     <Typography sx={{ fontWeight: "bold" }}>
-                      {user.username}
+                      {user?.username}
                     </Typography>
                     <Typography sx={{ color: "gray" }}>{user.email}</Typography>
                   </Box>
