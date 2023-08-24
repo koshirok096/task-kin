@@ -58,7 +58,7 @@ export default function TodoCard() {
       });
       const todo = await response.json();
       setInProgressTodos(todo);
-      // console.log(todo);
+      console.log(todo);
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -174,7 +174,7 @@ export default function TodoCard() {
                 {/* Assigned Member */}
                 <ListItemAvatar>
                   <Avatar 
-                    alt={todo.assingTo} 
+                    alt={todo.assignedTo} 
                     src="/static/images/avatar/1.jpg" 
                     sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
                   />
