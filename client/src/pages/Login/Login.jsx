@@ -82,7 +82,7 @@ const Login = () => {
       >
         <div className={styles.login_wrapper}>
           <h1>Login</h1>
-          <div>
+          <div style={{display:"flex", flexDirection:"column"}}>
             <TextField 
               id="outlined-basic" 
               label="Email" 
@@ -113,7 +113,7 @@ const Login = () => {
           </Button>
 
           {error && <p className={styles.error_message}>{error}</p>} {/* Display login error message */}
-          <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+          <p>Don't have an account? <Link to="/signup" style={{color:"blue"}}>Sign up</Link></p>
         </div>
       </Box>
     </>

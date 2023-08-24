@@ -114,7 +114,7 @@ const Signup = () => {
         <div className={styles.signup_wrapper}>
           <h1>Sign Up</h1>
           {signupMessage && <p className={styles.signup_message}>{signupMessage}</p>} {/* メッセージを表示 */}
-          <div>
+          <div className={styles.fieldswrapper}>
             <TextField 
               id="fullName" 
               label="Full Name" 
@@ -175,7 +175,7 @@ const Signup = () => {
   )}
           </Button>
 
-          <p>Already have an account? <Link to="/login">Login</Link></p>
+          <p>Already have an account? <Link to="/login" style={{color:"blue"}}>Login</Link></p>
         </div>
       </Box>
     </>
