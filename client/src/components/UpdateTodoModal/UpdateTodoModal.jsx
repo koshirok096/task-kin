@@ -67,6 +67,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
       const response = await axios.put(`http://localhost:3001/todo/${id}`, {
         title: todo.title,
         description: todo.description,
+        assignedTo: todo.assignedTo,
       }, {
         headers: {
           Authorization: token
@@ -123,16 +124,16 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               required
               placeholder=""
             />
-            {/* <TextField
+            <TextField
               id="assignedTo"
               label="Assigned To"
               variant="outlined"
-              placeholder={todo?.assignedTo}
+              // placeholder={todo?.assignedTo}
               onChange={(e) => handleChanges(e)}
-              // value={assignedTo}
+              value={todo?.assignedTo}
               // onChange={(e) => setAssignedTo(e.target.value)}
               sx={{ marginBottom: '1rem' }}
-            /> */}
+            />
             {/* <TextField
               id="startDate"
               label="Start Date"

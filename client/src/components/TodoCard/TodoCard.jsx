@@ -71,17 +71,33 @@ export default function TodoCard() {
     return date.toLocaleDateString('ja-JP', options);
   };
 
-  //
+  
+  // const getAssignedMember = async () => {
+  //   try {
+  //     const response = await fetch(`http://localhost:3001/todo/${user?.username}`, {
+  //       headers: {
+  //         Authorization: `${token}`
+  //       }
+  //     });
+  //     const member = await response.json();
+  //     setAssignedMember(member);
+  //     console.log('member is :', member);
+  //   } catch (error) {
+  //     console.error("An error occurred:", error);
+  //   }
+  // };
   const getAssignedMember = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/auth/${user?.username}`, {
+      const response = await fetch(`http://localhost:3001/auth/${user?._id}`, {
         headers: {
           Authorization: `${token}`
         }
       });
       const member = await response.json();
-      setAssignedMember(member);
-      // console.log('member is :', member);
+      console.log(response);
+      setAssignedMember(member.username);
+      // console.log('member is :', member.username);
+      // console.log(AssignedMember);
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -174,7 +190,9 @@ export default function TodoCard() {
                 {/* Assigned Member */}
                 <ListItemAvatar>
                   <Avatar 
-                    alt={todo.assignedTo} 
+                    // alt={todo.assignedTo} 
+                    alt={AssignedMember} 
+                    // alt={AssignedMember.find(member => member._id === todo.assignedTo)?.username || "Unknown User"}
                     src="/static/images/avatar/1.jpg" 
                     sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
                   />
