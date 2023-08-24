@@ -13,6 +13,7 @@ export default function Calendar() {
   const user = useSelector(state => state.auth.user);
   const token = useSelector(state => state.auth.token);
 
+
   useEffect(() => {
     fetchEvents();
   }, []);

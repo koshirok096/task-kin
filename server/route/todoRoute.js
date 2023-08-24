@@ -7,7 +7,7 @@ const router = express.Router();
 // ADD
 export const addTodo = async (req, res) => {
   const { id } = req.user;
-  const { title, description, groupId, assingTo, createdBy, startDate, endDate } = req.body;
+  const { title, description, groupId, assignedTo, createdBy, startDate, endDate } = req.body;
 
   if (!title) return res.status(400).send("Title is required");
   if (!description) return res.status(400).send("Description is required");
@@ -20,7 +20,7 @@ export const addTodo = async (req, res) => {
       title,
       description,
       groupId,
-      assignedTo: assingTo,
+      assignedTo: assignedTo,
       startDate,
       endDate,
       createdBy,
@@ -38,7 +38,7 @@ export const getGroupTodos = async (req, res) => {
   const { groupId } = req.params;
 
   try {
-    const todos = await Todo.find({ groupId }).populate("assingTo");
+    const todos = await Todo.find({ groupId }).populate("assignedTo");
     res.status(200).send(todos);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -47,13 +47,13 @@ export const getGroupTodos = async (req, res) => {
 // UPDATE
 export const updateTodo = async (req, res) => {
   const { id } = req.params;
-  const { title, description, assingTo, startDate, endDate, status } = req.body;
+  const { title, description, assignedTo, startDate, endDate, status } = req.body;
 
   try {
 
     const todo = await Todo.findOneAndUpdate(
       { _id: id },
-      { title, description, assingTo, startDate, endDate, status },
+      { title, description, assignedTo, startDate, endDate, status },
       { new: true }
     );
     res.status(200).send(todo);
