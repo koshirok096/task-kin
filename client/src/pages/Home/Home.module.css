@@ -1,5 +1,67 @@
-.layout{
-    position: relative;
-    left: calc(64px + 1px);
-    padding: 0 1rem;
-}
+/* Home.module.css */
+.layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .content {
+    width: 60%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 32px; /* Aumentei o tamanho do título */
+    margin-bottom: 10px; /* Reduzi a margem inferior */
+    color: #007bff; /* Azul */
+  }
+  
+  .userInfo {
+    text-align: center;
+    color: #333; /* Texto mais escuro */
+    margin-top: 20px; /* Adicionei margem superior */
+  }
+  
+  .notLoggedIn {
+    text-align: center;
+    color: #ff5722; /* Laranja */
+  }
+  
+  .navLinks ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .navLink {
+    text-decoration: none;
+    color: #007bff; /* Azul */
+    margin: 0 15px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .navLink:hover {
+    color: #0056b3; /* Azul mais escuro */
+  }
+
+  .userInfo {
+    text-align: center;
+    color: #333; /* Texto mais escuro */
+    margin-top: 20px;
+  }
+  
+  .userInfo p {
+    font-size: 14px;
+  font-weight: bold;
+  color: #333; /* Cor laranja chamativa */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 20px 0;
+  }
+  

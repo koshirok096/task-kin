@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -11,6 +11,9 @@ import styles from "./Settings.module.css";
 
 import Switch from '@mui/material/Switch';
 import { useSelector } from "react-redux";
+
+import axios from "axios"; // Import Axios for making HTTP requests
+
 
 
 export default function Settings() {
@@ -29,6 +32,28 @@ export default function Settings() {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   const user = useSelector(state => state.auth.user);
+  const [invitations, setInvitations] = useState([]);
+
+
+  useEffect(() => {
+    if (user) {
+      const fetchInvitations = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3001/invite/${user.email}`
+          );
+          const invitationsData = response.data; // Assuming the response contains invitation data
+          console.log("Fetched my invitations:", invitationsData); // Log fetched invitations
+          setInvitations(invitationsData); // Store the invitations in state
+        } catch (error) {
+          console.error("Error fetching invitations:", error);
+        }
+      };
+      fetchInvitations();
+    }
+  }, [user]);
+
+
 
   return (
     <>
@@ -37,21 +62,22 @@ export default function Settings() {
         {/* <div>Settings</div> */}
         <div className={styles.left_wrapper}>
           <h2>Invitation</h2>
-          <div className={styles.section_wrapper}>
-            <h3>Notification</h3>
-            <Avatar 
-              alt="Invited User" 
-              src="/static/images/avatar/1.jpg" 
-              sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} 
-            />
-            <p>
-              Hey! <i>invited user</i> ask you to join to <u>groupname</u>.
-            </p>
-            <div>
-              <Button variant="outlined">Accept</Button>
-              <Button variant="outlined">Decline</Button>
-            </div>
-          </div>
+          {invitations.map((invitation, index) => (
+    <div key={index}>
+      <Avatar 
+        alt="Invited User" 
+        src={invitation.avatarSrc} // Replace with the actual avatar source from the invitation data
+        sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} 
+      />
+      <p>
+        Hey! <i>{invitation.invitedUser}</i> asked you to join <u>{invitation.groupName}</u>.
+      </p>
+      <div>
+        <Button variant="outlined">Accept</Button>
+        <Button variant="outlined">Decline</Button>
+      </div>
+    </div>
+  ))}
           <div className={styles.section_wrapper}>
           <h3>Invite User</h3>
             <p>Do you want to invite a new member to your group? Let's tell!</p>
