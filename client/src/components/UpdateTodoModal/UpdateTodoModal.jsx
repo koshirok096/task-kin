@@ -109,6 +109,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               onChange={(e) => handleChanges(e)}
               sx={{ marginBottom: '1rem' }}
               required
+              placeholder=""
             />
             <TextField
               id="description"
@@ -120,6 +121,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               onChange={(e) => handleChanges(e)}
               sx={{ marginBottom: '1rem' }}
               required
+              placeholder=""
             />
             {/* <TextField
               id="assignTo"
@@ -173,7 +175,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               sx={{ marginTop: '1rem' }}
               type="submit"
             >
-              Add
+              Update
             </Button>
           </form>
         </div>
