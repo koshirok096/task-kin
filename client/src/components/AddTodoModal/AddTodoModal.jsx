@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
+import axios from 'axios';
 import { Link } from 'react-router-dom'; // Include useNavigate and useLocation
 
 import Modal from '@mui/material/Modal';
@@ -33,6 +33,7 @@ export default function AddTodoModal({ open, onClose }) {
   const [assignTo, setAssignTo] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [members, setMembers] = useState([]);
 
   const user = useSelector(state => state.auth.user);
   const token = useSelector(state => state.auth.token);
@@ -45,10 +46,10 @@ export default function AddTodoModal({ open, onClose }) {
       title,
       description,
       groupId: user.group[0], // Use actual user's groupId from Redux
-      assignTo: user.userId, // Use actual user's userId from Redux
+      assignedTo: assignTo, // Use actual user's userId from Redux
       startDate,
       endDate,
-      createdBy: user.userId, // Use actual user's userId from Redux
+      createdBy: user._id, // Use actual user's userId from Redux
     };
     console.log('fheowhoiehfwife', data);
     console.log('aaaaaaaajpapajpa', user.userId);
@@ -72,6 +73,37 @@ export default function AddTodoModal({ open, onClose }) {
       console.error('An error occurred', error);
     }
   };
+
+  const fetchMembers = async () => {
+    const groupId = user.group[0];
+    try {
+      const group = await axios.get(`http://localhost:3001/group/${groupId}`);
+      const members = group.data.members;
+      console.log('members', members);
+
+      const membersData = await Promise.all(
+        members.map(async (member) => {
+          const response = await axios.get(
+            `http://localhost:3001/auth/${member}`
+          );
+          return response.data;
+        })
+      );
+
+      // console.log('membersData', membersData);
+      setMembers(membersData);
+
+    } catch (error) { }
+
+  };
+
+  useEffect(() => {
+    fetchMembers();
+  }, []);
+
+  useEffect(() => {
+    console.log('assignTo', assignTo);
+  }, [assignTo]);
   
   // test
   const users = [
@@ -142,9 +174,9 @@ export default function AddTodoModal({ open, onClose }) {
               sx={{ marginBottom: '1rem' }}
             >
               {/* Map over your user data to generate MenuItems */}
-              {users.map((user) => (
-                <MenuItem key={user.userId} value={user.userId}>
-                  {user.name} {/* Display the user's name */}
+              {members.map((member) => (
+                <MenuItem key={member._id} value={member._id}>
+                  {member.username}{/* Display the user's name */}
                 </MenuItem>
               ))}
             </Select>

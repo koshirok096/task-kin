@@ -30,8 +30,10 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
 
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
+  const token = useSelector(state => state.auth.token);
   const user = useSelector(state => state.auth.user);
+
+  console.log(user);
   const [invitations, setInvitations] = useState([]);
 
 
@@ -53,7 +55,16 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
     }
   }, [user]);
 
+  const handleInvitation = async (yourResponse, invitationId) => {
+    console.log("Invitation ID:", invitationId);
+    console.log("Your response:", yourResponse);
 
+    try {
+      axios.defaults.headers.common["Authorization"] = token;
+      const response = await axios.post(`http://localhost:3001/invite/${invitationId}/${yourResponse}`);
+      console.log(response);
+    } catch (error) {}
+  }
 
   return (
     <>
@@ -62,21 +73,23 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
         <div className={styles.left_wrapper}>
           <h2>Invitation</h2>
           {invitations.map((invitation, index) => (
-    <div key={index}>
-      <Avatar 
-        alt="Invited User" 
-        src={invitation.avatarSrc} // Replace with the actual avatar source from the invitation data
-        sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} 
-      />
-      <p>
-        Hey! <i>{invitation.invitedUser}</i> asked you to join <u>{invitation.groupName}</u>.
-      </p>
-      <div>
-        <Button variant="outlined">Accept</Button>
-        <Button variant="outlined">Decline</Button>
-      </div>
-    </div>
-  ))}
+            invitation.status === "pending" && (
+              <div key={index}>
+              <Avatar 
+                alt="Invited User" 
+                src={invitation.avatarSrc} // Replace with the actual avatar source from the invitation data
+                sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} 
+              />
+              <p>
+                Hey! <i>{invitation?.group?.name}</i> asked you to join <u>{invitation.groupName}</u>.
+              </p>
+              <div>
+                <Button variant="outlined" onClick={() => handleInvitation("accept", invitation._id)}>Accept</Button>
+                <Button variant="outlined" onClick={() => handleInvitation("reject", invitation._id)}>Decline</Button>
+              </div>
+            </div>
+            )
+          ))}
           <div className={styles.section_wrapper}>
           <h3>Invite User</h3>
             <p>Do you want to invite a new member to your group? Let's tell!</p>
@@ -111,6 +124,7 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
         <CreateInvitationModal
           open={OpenCreateInvitationModal}
           onClose={handleCreateInvitationClose}
+          groupInfo={user.group}
         />
         <CreateGroupModal
           open={OpenCreateGroupModal}

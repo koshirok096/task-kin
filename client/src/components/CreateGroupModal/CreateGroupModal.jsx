@@ -5,9 +5,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom'; // Include useNavigate and useLocation
-
+import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import styles from "./CreateGroupModal.module.css";
+import { useSelector } from 'react-redux';
 
 
 const modalStyle = {
@@ -25,11 +26,26 @@ const modalStyle = {
 export default function CreateGroupModal({ open, onClose }) {
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState('');
+  const token = useSelector(state => state.auth.token);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   // Handle form submission here, e.g., dispatch an action to create the todo item
   // };
+  
+  const createGroup = async () => {
+
+    try {
+      const res = await axios.post("http://localhost:3001/group/create", { name: title }, {
+        headers: {
+          "Authorization": token
+        }
+      })
+      console.log(res);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
 
     return (
@@ -69,8 +85,8 @@ export default function CreateGroupModal({ open, onClose }) {
           required
           type="title"
         />
-        <h4>Who would you like to invite?</h4>
-        <TextField
+        {/* <h4>Who would you like to invite?</h4> */}
+        {/* <TextField
           id="email"
           label="Email Address"
           variant="outlined"
@@ -78,8 +94,9 @@ export default function CreateGroupModal({ open, onClose }) {
           onChange={(e) => setEmail(e.target.value)}
           sx={{ marginBottom: '1rem' }}
           type="email"
-        />
+        /> */}
         <Button
+          onClick={() => createGroup()}
           variant="contained"
           endIcon={<SendIcon />}
           sx={{ marginTop: '1rem' }}

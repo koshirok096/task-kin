@@ -16,7 +16,7 @@ const todoSchema = new mongoose.Schema({
     required: true,
     default: 'Hello There!'
   },
-  assingTo: {
+  assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     required: false,
     default: '',

@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../model/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { verifyUser } from '../middleware/verifyUser.js';
 
 const router = express.Router();
 
@@ -65,18 +66,18 @@ router.post("/login", async (req, res) => {
 });
 
 // 
-router.get("/:id", async (req, res) => {
-  try {
-    const user = await findUserByUsername(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User could not found." });
-    }
-    res.status(200).json({ message: "User found!", user });
-  } catch (e) {
-    console.log(e);
-    return res.status(500).json({ message: "Server Error" });
-  }
-});
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const user = await findUserByUsername(req.params.id);
+//     if (!user) {
+//       return res.status(404).json({ message: "User could not found." });
+//     }
+//     res.status(200).json({ message: "User found!", user });
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(500).json({ message: "Server Error" });
+//   }
+// });
 
 router.delete("/:id",
   async (req, res, next) => {
@@ -92,6 +93,33 @@ router.delete("/:id",
         })
       }
     })
+});
+
+router.get("/me", verifyUser, async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const user = await User.findById(userId).populate("group");
+    if (!user) {
+      return res.status(404).json({ message: "User could not found." });
+    }
+    res.status(200).json({ message: "User found!", user });
+  } catch (e) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User could not found." });
+    }
+    res.status(200).json(user);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "Server Error" });
+  }
 });
 
 export default router

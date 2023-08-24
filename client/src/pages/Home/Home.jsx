@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css"
-
+import axios from "axios";
+import { refreshUser } from "../../slices/authSlice";
 
 
 const Home = () => {
   const user = useSelector(state => state.auth.user);
   const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
 
   const [group, setGroup] = useState(null);
   const [uncompletedTodos, setUncompletedTodos] = useState(null);
   const [remainingInvitation, setRemainingInvitation] = useState(null);
   const [greeting, setGreeting] = useState('');
 
+  const fetchUser = async () => {
+    try {
+      const user = await axios.get("http://localhost:3001/auth/me", { 
+        headers: {
+          "Authorization": token
+        }
+      });
+      dispatch(refreshUser(user.data.user));
+    } catch (error) {
+      
+    }
+  }
 
   useEffect(() => {
     fetchData();
     getRemainingInvitation();
     setGreeting(getGreetingMessage()); // 初回のレンダリング時に挨拶メッセージを設定
+    fetchUser();
   }, []);
+  
 
   const fetchData = async () => {
     try {

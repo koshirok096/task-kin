@@ -20,7 +20,7 @@ export const addTodo = async (req, res) => {
       title,
       description,
       groupId,
-      assingTo,
+      assignedTo: assingTo,
       startDate,
       endDate,
       createdBy,

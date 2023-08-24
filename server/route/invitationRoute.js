@@ -23,21 +23,21 @@ router.post('/:invitationId/accept',verifyUser, async (req, res) => {
 
   // or you can check if status of invitation is pending
   const { invitationId } = req.params;
-  const { id } = req.user;
+  const { userId } = req.user;
+
   const invitation = await Invitation.findById(invitationId).populate('group');
 
   invitation.status = 'accepted';
   await invitation.save();
 
   // add group id to user group array
-  const user = await User.findById(id);
-  console.log(user);
+  const user = await User.findById(userId);
   user.group.push(invitation.group._id);
 
   await user.save();
 
   const group = await Group.findById(invitation.group._id);
-  group.members.push(id);
+  group.members.push(userId);
 
   await group.save();
   // once the person accept, you should delete invitation

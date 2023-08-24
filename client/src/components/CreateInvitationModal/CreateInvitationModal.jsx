@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -7,9 +7,10 @@ import SendIcon from '@mui/icons-material/Send';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom'; // Include useNavigate and useLocation
-
+import axios from 'axios';
 import Modal from '@mui/material/Modal';
 import styles from "./CreateInvitationModal.module.css";
+import { useSelector } from 'react-redux';
 
 
 const modalStyle = {
@@ -24,9 +25,44 @@ const modalStyle = {
   p: 4,
 };
 
-export default function CreateInvitationModal({ open, onClose }) {
+export default function CreateInvitationModal({ open, onClose, groupInfo }) {
   const [email, setEmail] = useState('');
+  const [group, setGroup] = useState(null);
+  const token = useSelector(state => state.auth.token);
 
+  const fetchGroupInfo = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/group/${groupInfo}`, {
+        headers: {
+          Authorization: token // Here
+        }
+      });
+      console.log(response.data);
+      setGroup(response.data);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const createInvitation = async () => {
+    try {
+      const response = await axios.post(`http://localhost:3001/invite/${groupInfo}`, {
+        email: email
+      }, {
+        headers: {
+          Authorization: token // Here
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchGroupInfo();
+  }, []);
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   // Handle form submission here, e.g., dispatch an action to create the todo item
@@ -71,14 +107,16 @@ export default function CreateInvitationModal({ open, onClose }) {
               required
               type="email"
             />
-            <h4>To which group(s)?</h4>
-            <FormControlLabel control={<Checkbox />} label="Group-title-1" />
-            <FormControlLabel control={<Checkbox />} label="Group-title-2" />
+            <h4>You are inviting this people to {group && group?.name}</h4>
+            {/* <FormControlLabel control={<Checkbox />} label="Group-title-1" />
+            <FormControlLabel control={<Checkbox />} label="Group-title-2" /> */}
+
             <Button
               variant="contained"
               endIcon={<SendIcon />}
               sx={{ marginTop: '1rem' }}
               type="submit"
+              onClick={() => createInvitation()}
             >
               Send
             </Button>

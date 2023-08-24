@@ -10,20 +10,22 @@ import User from '../model/user.js';
 // Create a new group
 router.post('/create', verifyUser, async (req, res) => {
   const { name } = req.body;
-  const { id } = req.user;
+  const { userId } = req.user;
+
+  console.log(req.user);
   
   try {
     if(!name) return res.status(400).send("Group name is required");
 
     const newGroup = new Group({
       name,
-      members: [id],
-      owner: id
+      members: [userId],
+      owner: userId
     });
 
     await newGroup.save();
 
-    const user = await User.findById(id);
+    const user = await User.findById(userId);
 
     // group is an array of group ids
     user.group.push(newGroup._id);
