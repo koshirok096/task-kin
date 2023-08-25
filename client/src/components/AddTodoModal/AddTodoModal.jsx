@@ -51,8 +51,6 @@ export default function AddTodoModal({ open, onClose }) {
       endDate,
       createdBy: user._id, // Use actual user's userId from Redux
     };
-    console.log('fheowhoiehfwife', data);
-    console.log('aaaaaaaajpapajpa', user.userId);
     try {
       const response = await fetch('http://localhost:3001/todo/create', {
         method: 'POST',

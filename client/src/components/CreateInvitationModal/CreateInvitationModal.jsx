@@ -30,6 +30,10 @@ export default function CreateInvitationModal({ open, onClose, groupInfo }) {
   const [group, setGroup] = useState(null);
   const token = useSelector(state => state.auth.token);
 
+
+
+
+
   const fetchGroupInfo = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/group/${groupInfo}`, {
@@ -37,16 +41,24 @@ export default function CreateInvitationModal({ open, onClose, groupInfo }) {
           Authorization: token // Here
         }
       });
-      console.log(response.data);
+      console.log('wfihfewefwpofjwef', response.data);
       setGroup(response.data);
+      
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
 
+  useEffect(() => {
+    fetchGroupInfo();
+  }, []);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Handle form submission here, e.g., dispatch an action to create the todo item
+  // };
+
+
   const createInvitation = async () => {
-
-
 
     try {
 
@@ -67,13 +79,6 @@ export default function CreateInvitationModal({ open, onClose, groupInfo }) {
   };
 
 
-  useEffect(() => {
-    fetchGroupInfo();
-  }, []);
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Handle form submission here, e.g., dispatch an action to create the todo item
-  // };
 
 
   return (

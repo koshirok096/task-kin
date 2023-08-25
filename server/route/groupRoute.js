@@ -65,34 +65,3 @@ router.get("/:id", async (req, res) => {
 });
 
 export default router;
-
-//
-
-// Delete a group by groupid
-router.delete("/delete/:groupId", verifyUser, async (req, res) => {
-  const { groupId } = req.params;
-  const { userId } = req.user;
-
-  try {
-    const group = await Group.findById(groupId);
-
-    if (!group) {
-      return res.status(404).send("Group not found");
-    }
-
-    if (group.owner.toString() !== userId) {
-      return res.status(403).send("You are not the owner of this group");
-    }
-
-    await Group.findByIdAndDelete(groupId);
-
-    const user = await User.findById(userId);
-    user.groups = user.groups.filter(group => group.toString() !== groupId);
-    await user.save();
-
-    res.status(200).send("Group deleted successfully");
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
