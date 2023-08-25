@@ -30,7 +30,7 @@ const modalStyle = {
 export default function AddTodoModal({ open, onClose }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [assignTo, setAssignTo] = useState('');
+  const [assignedTo, setAssignedTo] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [members, setMembers] = useState([]);
@@ -46,7 +46,7 @@ export default function AddTodoModal({ open, onClose }) {
       title,
       description,
       groupId: user.group[0], // Use actual user's groupId from Redux
-      assignedTo: assignTo, // Use actual user's userId from Redux
+      assignedTo: assignedTo, // Use actual user's userId from Redux
       startDate,
       endDate,
       createdBy: user._id, // Use actual user's userId from Redux
@@ -100,8 +100,8 @@ export default function AddTodoModal({ open, onClose }) {
   }, []);
 
   useEffect(() => {
-    console.log('assignTo', assignTo);
-  }, [assignTo]);
+    console.log('assignedTo', assignedTo);
+  }, [assignedTo]);
   
   // test
   const users = [
@@ -164,11 +164,11 @@ export default function AddTodoModal({ open, onClose }) {
               sx={{ marginBottom: '1rem' }}
             /> */}
             <Select
-              id="assignTo"
-              label="Assign To"
+              id="assignedTo"
+              label="Assigned To"
               variant="outlined"
-              value={assignTo}
-              onChange={(e) => setAssignTo(e.target.value)}
+              value={assignedTo}
+              onChange={(e) => setAssignedTo(e.target.value)}
               sx={{ marginBottom: '1rem' }}
             >
               {/* Map over your user data to generate MenuItems */}

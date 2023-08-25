@@ -115,7 +115,7 @@ const Home = () => {
           <h3 style={{color: 'gray'}}>Family and work are the twin pillars of a balanced life.</h3>
           <p>YOUR GROUP: {group ? group?.name : "No group yet"}</p>
           <p>Numbers of Remain Tasks : {uncompletedTodos ? uncompletedTodos.length : '0'}</p>
-          <p>Numbers of Assigned Tasks : {uncompletedTodos ? uncompletedTodos.filter(todo => todo.assingTo === user._id).length : 'not connected'}</p>
+          <p>Numbers of Assigned Tasks : {uncompletedTodos ? uncompletedTodos.filter(todo => todo.assignedTo === user._id).length : 'not connected'}</p>
           <p>Numbers of Pending Invitation : {remainingInvitation ? remainingInvitation.length : '0'}</p>
         </>
       ) : (
