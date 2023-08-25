@@ -190,7 +190,8 @@ export default function TodoCard() {
                 {/* Assigned Member */}
                 <ListItemAvatar>
                   <Avatar 
-                    alt={AssignedMember ? AssignedMember.toUpperCase() : "Unknown User"} 
+                    // alt={AssignedMember ? AssignedMember.toUpperCase() : "Unknown User"}
+                    alt={todo.assignedTo} 
                     src="/static/images/avatar/1.jpg" 
                     sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
                   />
