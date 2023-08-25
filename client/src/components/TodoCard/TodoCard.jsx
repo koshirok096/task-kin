@@ -197,7 +197,6 @@ export default function TodoCard() {
                     sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
                   /> */}
                   {/* <Avatar 
-                    alt={todo.assignedTo === user._id ? "あ" : "Unknown User"}
                     src="/static/images/avatar/1.jpg" 
                     sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
                   /> */}
