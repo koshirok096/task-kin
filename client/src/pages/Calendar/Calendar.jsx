@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import styles from "./Calendar.module.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useSelector } from "react-redux";
+
+//DARKMODE
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "../../slices/theme";
+import GlobalTheme from "../../slices/globals.js";
+import styled from "styled-components";
 
 const localizer = momentLocalizer(moment);
 
@@ -39,8 +45,30 @@ export default function Calendar() {
     }
   };
 
+  //DARKMODE
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      window.localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    } else {
+      window.localStorage.setItem("theme", "light");
+      setTheme("light");
+    }
+  };
+
+  useEffect(() => {
+    const localTheme = window.localStorage.getItem("theme");
+    localTheme && setTheme(localTheme);
+  }, []);
+
   return (
+
     <div className={styles.main_wrapper}>
+          <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+    <Fragment>
+      <GlobalTheme />
       <BigCalendar
         localizer={localizer}
         defaultDate={new Date()}
@@ -48,6 +76,9 @@ export default function Calendar() {
         events={events}
         style={{ height: "100vh" }}
       />
+          </Fragment>
+    </ThemeProvider>
     </div>
+
   );
 }

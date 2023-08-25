@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -13,6 +13,14 @@ import Switch from '@mui/material/Switch';
 import { useSelector } from "react-redux";
 
 import axios from "axios"; // Import Axios for making HTTP requests
+
+
+//darkmode
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "../../slices/theme";
+import GlobalTheme from "../../slices/globals.js";
+import styled from "styled-components";
+
 
 
 
@@ -85,9 +93,28 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
     // Fetch the user's group information when the component mounts
     getGroup();
   }, []);
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      window.localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    } else {
+      window.localStorage.setItem("theme", "light");
+      setTheme("light");
+    }
+  };
+
+  useEffect(() => {
+    const localTheme = window.localStorage.getItem("theme");
+    localTheme && setTheme(localTheme);
+  }, []);
 
   return (
     <>
+       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <Fragment>
+        <GlobalTheme />
       <Box className={styles.main_wrapper}>
         {/* <div>Settings</div> */}
         <div className={styles.left_wrapper}>
@@ -126,7 +153,7 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
           </div>
           <h2>Settings</h2>
           <div className={styles.switch_wrapper}>
-          <Switch {...label} />
+          <Switch  onChange={toggleTheme} />
             Enable Darkmode
           </div>
         </div>
@@ -155,6 +182,8 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
         />
 
       </Box>
+      </Fragment>
+    </ThemeProvider>
     </>
   );
 }

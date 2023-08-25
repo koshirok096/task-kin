@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment, useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
@@ -15,6 +15,12 @@ import AddTodoModal from '../../components/AddTodoModal/AddTodoModal';
 import UpdateTodoModal from '../../components/UpdateTodoModal/UpdateTodoModal';
 import TodoCard from '../../components/TodoCard/TodoCard';
 
+//DARKMODE
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "../../slices/theme";
+import GlobalTheme from "../../slices/globals.js";
+import * as Mistyled from "styled-components";
+
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -28,6 +34,8 @@ const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
+
+
 export default function Todolist() {
 
   const [OpenAddModal, setOpenAddModal] = React.useState(false);
@@ -39,8 +47,28 @@ export default function Todolist() {
   const handleUpdateTodoClick = () => setOpenUpdateModal(true);
   const handleUpdateTodoClose = () => setOpenUpdateModal(false);
 
-  return (
+  //DARKMODE
+const [theme, setTheme] = useState("light");
 
+const toggleTheme = () => {
+  if (theme === "light") {
+    window.localStorage.setItem("theme", "dark");
+    setTheme("dark");
+  } else {
+    window.localStorage.setItem("theme", "light");
+    setTheme("light");
+  }
+};
+
+useEffect(() => {
+ const localTheme = window.localStorage.getItem("theme");
+ localTheme && setTheme(localTheme);
+}, []);
+
+  return (
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+    <Fragment>
+    <GlobalTheme />
     <Box className={styles.main_wrapper} sx={{ flexGrow: 1, maxWidth: 1000 }}>
       <TodoCard />
 
@@ -69,5 +97,7 @@ export default function Todolist() {
         <UpdateTodoModal open={OpenUpdateModal} onClose={handleUpdateTodoClose} />
         </Box>
     </Box>
+      </Fragment>
+    </ThemeProvider>
   );
 }

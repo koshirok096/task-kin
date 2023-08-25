@@ -1,5 +1,9 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { Fragment, useState,useEffect } from "react";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./slices/theme.js";
+import GlobalTheme from "./slices/globals.js";
+import styled from "styled-components";
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,7 +24,22 @@ import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.token !== null); // Redux ストアからログイン状態を取得
+  const [theme, setTheme] = useState("light");
 
+  const toggleTheme = () => {
+    if (theme === "light") {
+      window.localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    } else {
+      window.localStorage.setItem("theme", "light");
+      setTheme("light");
+    }
+  };
+
+  useEffect(() => {
+    const localTheme = window.localStorage.getItem("theme");
+    localTheme && setTheme(localTheme);
+  }, []);
   return (
     <div>
       <Helmet>
