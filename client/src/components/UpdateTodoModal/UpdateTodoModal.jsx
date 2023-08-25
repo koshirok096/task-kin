@@ -124,7 +124,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               required
               placeholder=""
             />
-            <TextField
+            {/* <TextField
               id="assignedTo"
               label="Assigned To"
               variant="outlined"
@@ -133,7 +133,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
               value={todo?.assignedTo}
               // onChange={(e) => setAssignedTo(e.target.value)}
               sx={{ marginBottom: '1rem' }}
-            />
+            /> */}
             {/* <TextField
               id="startDate"
               label="Start Date"

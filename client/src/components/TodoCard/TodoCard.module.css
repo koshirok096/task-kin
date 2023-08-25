@@ -17,4 +17,24 @@
 .details_wrapper {
   display: flex;
   flex-direction: row;
+  padding: 0 1rem;
+}
+
+.firsttodobox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.assignedwrapper{
+  color: white;
+  margin-top: auto;
+  background: red;
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.assignedwrapper p{
+
 }

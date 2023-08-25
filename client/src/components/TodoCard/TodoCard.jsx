@@ -94,7 +94,6 @@ export default function TodoCard() {
         }
       });
       const member = await response.json();
-      console.log(response);
       setAssignedMember(member.username);
       // console.log('member is :', member.username);
       // console.log(AssignedMember);
@@ -123,7 +122,8 @@ export default function TodoCard() {
     }
   };
 
-  
+  console.log('todos', getAssignedMember());
+  console.log('users', user);
 
   return (
     <>
@@ -157,7 +157,7 @@ export default function TodoCard() {
           {inProgressTodos.map((todo, index) => (
             <div key={index} className={styles.todolist_wrapper}>
               <div className={styles.todo_header_wrapper}>
-                <ListItemAvatar>
+                <ListItemAvatar className={styles.firsttodobox}>
                   <TaskAltIcon sx={{ color: indigo[500] }} />
                 </ListItemAvatar>
                 <ListItemText
@@ -186,17 +186,30 @@ export default function TodoCard() {
                 <ListItemText
                   primary="End Date"
                   secondary={formatDate(todo.endDate)}
+                  style={{margitTop:'auto'}}
                 />
                 {/* Assigned Member */}
-                <ListItemAvatar>
-                  <Avatar 
-                    alt={AssignedMember ? AssignedMember.toUpperCase() : "Unknown User"} 
+                <ListItemAvatar style={{ marginTop: 'auto'}} >
+                  {/* <Avatar 
+                    alt={AssignedMember ? AssignedMember : "Unknown User"}
+                    // alt={todo.assignedTo} 
                     src="/static/images/avatar/1.jpg" 
                     sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
-                  />
+                  /> */}
+                  {/* <Avatar 
+                    alt={todo.assignedTo === user._id ? "あ" : "Unknown User"}
+                    src="/static/images/avatar/1.jpg" 
+                    sx={{ width: 30, height: 30, fontSize: 16, bgcolor: teal[200], marginTop: 2 }} 
+                  /> */}
+                  {todo.assignedTo === user._id && (
+                    <Typography className={styles.assignedwrapper} style={{  fontSize: '0.8rem',
+                      fontWeight: 'bold'  
+                    }}>Assigned to You</Typography>
+                  )}
+
                 </ListItemAvatar>
               </div>
-              </div>
+            </div>
           ))}
         </List>
       </Grid>
