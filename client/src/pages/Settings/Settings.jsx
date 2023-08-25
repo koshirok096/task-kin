@@ -28,13 +28,28 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
   const handleCreateGroupClick = () => setOpenCreateGroupModal(true);
   const handleCreateGroupClose = () => setOpenCreateGroupModal(false);
 
+  const [group, setGroup] = useState(null);
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const token = useSelector(state => state.auth.token);
   const user = useSelector(state => state.auth.user);
 
-  console.log(user);
   const [invitations, setInvitations] = useState([]);
+
+  const getGroup = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/group/${user.group[0]}`, {
+        headers: {
+          Authorization: `${token}` // Here
+        }
+      });
+      const data = await response.json();
+      setGroup(data);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };  
+
 
 
   useEffect(() => {
@@ -66,6 +81,11 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
     } catch (error) {}
   }
 
+  useEffect(() => {
+    // Fetch the user's group information when the component mounts
+    getGroup();
+  }, []);
+
   return (
     <>
       <Box className={styles.main_wrapper}>
@@ -74,14 +94,14 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
           <h2>Invitation</h2>
           {invitations.map((invitation, index) => (
             invitation.status === "pending" && (
-              <div key={index}>
+              <div key={index} className={styles.section_wrapper}>
               <Avatar 
                 alt="Invited User" 
                 src={invitation.avatarSrc} // Replace with the actual avatar source from the invitation data
                 sx={{ width: 40, height: 40, bgcolor: lightBlue[200] }} 
               />
               <p>
-                Hey! <i>{invitation?.group?.name}</i> asked you to join <u>{invitation.groupName}</u>.
+                Hey! <i style={{color:'purple', fontWeight:'bold'}}>{invitation?.group?.name}</i> asked you to join <u>{invitation.groupName}</u>.
               </p>
               <div>
                 <Button variant="outlined" onClick={() => handleInvitation("accept", invitation._id)}>Accept</Button>
@@ -92,14 +112,14 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
           ))}
           <div className={styles.section_wrapper}>
           <h3>Invite User</h3>
-            <p>Do you want to invite a new member to your group? Let's tell!</p>
+            <p>Do you want to invite a new member to your group? Let's invite!</p>
             <Button variant="outlined" onClick={handleCreateInvitationClick}>
               Create Invitation
             </Button>
           </div>
           <div className={styles.section_wrapper}>
           <h3>Create Group</h3>
-            <p>Do you want to create a new group? Let's do this!</p>
+            <p>Do you want to create a new group? Let's make!</p>
             <Button variant="outlined" onClick={handleCreateGroupClick}>
               Create Group
             </Button>
@@ -117,9 +137,10 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
             className={styles.avatar_wrapper}
             sx={{ width: 100, height: 100, fontSize: 48, bgcolor: lightBlue[200] }}
           />
-          <h2>{user?.username}</h2>
+          <h2 style={{ marginBottom: '0'}}>{user?.username}</h2>
           <p>{user.email}</p>
-          <div className={styles.groupbox}>Group A</div>
+          {/* <p>{user.description}</p> */}
+          <div className={styles.groupbox}>{group?.name}</div>
         </div>
         <CreateInvitationModal
           open={OpenCreateInvitationModal}

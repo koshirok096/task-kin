@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import styles from "./Signup.module.css";
 import loaderImage from '../../images/loader.gif'; // Replace with the actual path to your loader.gif
+import mainLogo from "../../images/main-logo.png"; 
+
 
 const Signup = () => {
   const [fullName, setFullName] = useState('');
@@ -111,11 +113,17 @@ const Signup = () => {
         noValidate
         autoComplete="off"
       >
+        <div className={styles.leftwrapper}></div>
         <div className={styles.signup_wrapper}>
+        <div className={styles.logo_wrapper}>
+            <img src={mainLogo} alt="Logo" />
+            <h2>Task-Kin</h2>
+          </div>
           <h1>Sign Up</h1>
           {signupMessage && <p className={styles.signup_message}>{signupMessage}</p>} {/* メッセージを表示 */}
           <div className={styles.fieldswrapper}>
             <TextField 
+              className={styles.inputwrapper}
               id="fullName" 
               label="Full Name" 
               variant="outlined" 
@@ -126,6 +134,7 @@ const Signup = () => {
               sx={{ marginBottom: '1rem' }} 
             />
             <TextField 
+              className={styles.inputwrapper}
               id="userName" 
               label="User Name" 
               variant="outlined" 
@@ -136,6 +145,7 @@ const Signup = () => {
               sx={{ marginBottom: '1rem' }} 
             />
             <TextField 
+              className={styles.inputwrapper}
               id="email" 
               label="Email" 
               variant="outlined" 
@@ -145,7 +155,8 @@ const Signup = () => {
               helperText={emailError}
               sx={{ marginBottom: '1rem' }} 
             />
-            <TextField 
+            <TextField
+              className={styles.inputwrapper} 
               id="password" 
               label="Password" 
               variant="outlined" 

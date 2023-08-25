@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import styles from "./Login.module.css";
+import mainLogo from "../../images/main-logo.png"; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -80,9 +81,14 @@ const Login = () => {
         noValidate
         autoComplete="off"
       >
+        <div className={styles.leftwrapper}></div>
         <div className={styles.login_wrapper}>
+          <div className={styles.logo_wrapper}>
+            <img src={mainLogo} alt="Logo" />
+            <h2>Task-Kin</h2>
+          </div>
           <h1>Login</h1>
-          <div style={{display:"flex", flexDirection:"column"}}>
+          <div style={{display:"flex", flexDirection:"column", width:"270px"}}>
             <TextField 
               id="outlined-basic" 
               label="Email" 

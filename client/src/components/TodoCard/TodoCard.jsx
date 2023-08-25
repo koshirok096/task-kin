@@ -151,7 +151,7 @@ export default function TodoCard() {
 
       <Grid item xs={12} md={6}>
         <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-          Avatar with text and icon
+          Group Todo List
         </Typography>
         <List dense={dense}>
           {inProgressTodos.map((todo, index) => (

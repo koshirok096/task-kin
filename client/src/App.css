@@ -43,6 +43,7 @@ a {
 }
 
 body{
+  margin: 0;
   font-family: 'Raleway', sans-serif;
   /*要素の高さを指定*/
   /* height: 300px; */
