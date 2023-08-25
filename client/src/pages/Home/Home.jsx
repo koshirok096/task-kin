@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -7,6 +7,12 @@ import axios from "axios";
 import { refreshUser } from "../../slices/authSlice";
 import Divider from "@mui/material/Divider";
 import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
+
+//DARKMODE
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "../../slices/theme";
+import GlobalTheme from "../../slices/globals.js";
+import styled from "styled-components";
 
 const Home = () => {
   const user = useSelector(state => state.auth.user);
@@ -119,10 +125,30 @@ const Home = () => {
   // 日付をフォーマット
   const formattedDate = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
 
+   //DARKMODE
+   const [theme, setTheme] = useState("light");
+
+   const toggleTheme = () => {
+     if (theme === "light") {
+       window.localStorage.setItem("theme", "dark");
+       setTheme("dark");
+     } else {
+       window.localStorage.setItem("theme", "light");
+       setTheme("light");
+     }
+   };
+
+   useEffect(() => {
+    const localTheme = window.localStorage.getItem("theme");
+    localTheme && setTheme(localTheme);
+  }, []);
 
 
   return (
     <div className={styles.layout}>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+    <Fragment>
+    <GlobalTheme />
       {user ? (
         <>
         <div className={styles.titleandtimewrapper}>
@@ -162,8 +188,10 @@ const Home = () => {
           </li>
         </ul>
       </nav> */}
+          </Fragment>
+    </ThemeProvider>
     </div>
-    
+
   );
 };
 
