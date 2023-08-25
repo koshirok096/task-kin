@@ -262,6 +262,7 @@ const Navbar = React.memo(() => {
               {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
               <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
               {/* Badge for uncompletedTodos */}
+              <Tooltip title="All Group Tasks">
               <Link to="/todolist">
                 <Badge
                   badgeContent={uncompletedTodos?.length || 0}
@@ -269,7 +270,9 @@ const Navbar = React.memo(() => {
                   <FormatListBulletedIcon color="action" />
                 </Badge>
               </Link>
+              </Tooltip>
               {/* Badge for remainingInvitation */}
+              <Tooltip title="Pending Invitation">
               <Link to="/settings">
                 <Badge
                   badgeContent={remainingInvitation?.length || 0}
@@ -278,6 +281,7 @@ const Navbar = React.memo(() => {
                   <NotificationsIcon color="action" />
                 </Badge>
               </Link>
+              </Tooltip>
               <Tooltip title="Account settings">
                 <IconButton
                   onClick={handleClick}

@@ -140,7 +140,9 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
           <h2 style={{ marginBottom: '0'}}>{user?.username}</h2>
           <p>{user.email}</p>
           {/* <p>{user.description}</p> */}
-          <div className={styles.groupbox}>{group?.name}</div>
+            <div className={styles.groupbox}>
+              {group ? group.name : "Not yet joined"}
+            </div>
         </div>
         <CreateInvitationModal
           open={OpenCreateInvitationModal}
