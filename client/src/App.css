@@ -43,6 +43,7 @@ a {
 }
 
 body{
+  font-family: 'Raleway', sans-serif;
   /*要素の高さを指定*/
   /* height: 300px; */
   /*上下方向にはみ出した要素ををスクロールさせる*/

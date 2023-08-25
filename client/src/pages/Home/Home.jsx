@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import styles from "./Home.module.css"
 import axios from "axios";
 import { refreshUser } from "../../slices/authSlice";
-
+import Divider from "@mui/material/Divider";
+import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
 
 const Home = () => {
   const user = useSelector(state => state.auth.user);
@@ -98,7 +99,7 @@ const Home = () => {
   const getGreetingMessage = () => {
     const currentHour = new Date().getHours();
 
-    if (currentHour >= 0 && currentHour < 12) {
+    if (currentHour >= 6 && currentHour < 12) {
       return "Good Morning";
     } else if (currentHour >= 12 && currentHour < 18) {
       return "Good Afternoon";
@@ -107,22 +108,48 @@ const Home = () => {
     }
   };
 
+  const today = new Date();
+
+  // 月の名称を取得
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  // 日付をフォーマット
+  const formattedDate = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+
+
+
   return (
     <div className={styles.layout}>
       {user ? (
         <>
-          <h2>{greeting}, {user?.username}!</h2>
-          <h3 style={{color: 'gray'}}>Family and work are the twin pillars of a balanced life.</h3>
-          <p>YOUR GROUP: {group ? group?.name : "No group yet"}</p>
-          <p>Numbers of Remain Tasks : {uncompletedTodos ? uncompletedTodos.length : '0'}</p>
-          <p>Numbers of Assigned Tasks : {uncompletedTodos ? uncompletedTodos.filter(todo => todo.assignedTo === user._id).length : 'not connected'}</p>
-          <p>Numbers of Pending Invitation : {remainingInvitation ? remainingInvitation.length : '0'}</p>
+        <div className={styles.titleandtimewrapper}>
+          <div className={styles.titlewrapper}>
+            <h2>{greeting}, {user?.username}!</h2>
+            <h3>Family and work are the twin pillars of a balanced life.</h3>
+          </div>
+          <p><HistoryToggleOffIcon/>{formattedDate}</p>
+          </div>
+          <Divider />
+          <div className={styles.groupcard}>
+            <p>Your Group: <br /> {group ? group?.name : "Not joined any group yet. Create or join group!"}</p>
+          </div>
+          <div>
+      </div>
+
+          <div className={styles.cardwrapper}>
+            <div className={styles.card}>Remain Tasks : <br /> <span> {uncompletedTodos ? uncompletedTodos.length : '0'}</span></div>
+            <div className={styles.card}>Assigned Tasks : <br /> <span> {uncompletedTodos ? uncompletedTodos.filter(todo => todo.assignedTo === user._id).length : '0'}</span></div>
+            <div className={styles.card}>Pending Invitation : <br /> <span> {remainingInvitation ? remainingInvitation.length : '0'}</span></div>
+          </div>
         </>
       ) : (
         <p></p>
       )}
 
-      <nav style={{ marginLeft: "30vw" }}>
+      {/* <nav style={{ marginLeft: "30vw" }}>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -134,7 +161,7 @@ const Home = () => {
             <Link to="/signup">Signup</Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
     </div>
     
   );

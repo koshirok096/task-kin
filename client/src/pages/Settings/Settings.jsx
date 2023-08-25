@@ -124,7 +124,7 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
         <CreateInvitationModal
           open={OpenCreateInvitationModal}
           onClose={handleCreateInvitationClose}
-          groupInfo={user.group}
+          groupInfo={user && user.group[0]}
         />
         <CreateGroupModal
           open={OpenCreateGroupModal}

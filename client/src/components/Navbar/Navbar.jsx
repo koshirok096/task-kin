@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -39,10 +39,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../slices/authSlice"; // authSliceからlogoutアクションをインポート
 
 import Button from "@mui/material/Button";
-import Badge from '@mui/material/Badge';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
-import AddHomeIcon from '@mui/icons-material/AddHome';
+import AddHomeIcon from "@mui/icons-material/AddHome";
 import CreateInvitationModal from "../CreateInvitationModal/CreateInvitationModal";
 import CreateGroupModal from "../CreateGroupModal/CreateGroupModal";
 
@@ -113,10 +113,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-
-
 const Navbar = React.memo(() => {
-  
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = React.useState(false);
@@ -146,8 +143,7 @@ const Navbar = React.memo(() => {
   };
 
   const user = useSelector((state) => state.auth.user);
-  const token = useSelector(state => state.auth.token);
-
+  const token = useSelector((state) => state.auth.token);
 
   //
   const [OpenCreateInvitationModal, setOpenCreateInvitationModal] =
@@ -160,7 +156,6 @@ const Navbar = React.memo(() => {
   const handleCreateGroupClick = () => setOpenCreateGroupModal(true);
   const handleCreateGroupClose = () => setOpenCreateGroupModal(false);
 
-  
   // アカウント設定メニューを開くハンドラ
   const handleAccountMenuOpen = () => {
     setAccountMenuOpen(true);
@@ -176,45 +171,56 @@ const Navbar = React.memo(() => {
 
   const getUncompletedTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`, {
-        headers: {
-          Authorization: `${token}` // ここに実際のトークンを追加
+      const response = await fetch(
+        `http://localhost:3001/todo/${user.group[0]}/inprogress`,
+        {
+          headers: {
+            Authorization: `${token}`, // ここに実際のトークンを追加
+          },
         }
-      });
+      );
       const todo = await response.json();
       setUncompletedTodos(todo);
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
-  
+
   const getRemainingInvitation = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/invite/${user.email}`, {
-        headers: {
-          Authorization: `${token}` // ここに実際のトークンを追加
+      const response = await fetch(
+        `http://localhost:3001/invite/${user.email}`,
+        {
+          headers: {
+            Authorization: `${token}`, // ここに実際のトークンを追加
+          },
         }
-      });
+      );
       const invitations = await response.json();
-  
+
       // フィルタリング: invitation.status が 'pending' のものだけ取得
-      const pendingInvitations = invitations.filter(invitation => invitation.status === 'pending');
-  
+      const pendingInvitations = invitations.filter(
+        (invitation) => invitation.status === "pending"
+      );
+
       setRemainingInvitation(pendingInvitations);
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
-  
+
   useEffect(() => {
     getUncompletedTodos();
     getRemainingInvitation();
   }, []);
-  
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }} style={{ padding: "0" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        position="fixed"
+        open={open}
+        style={{ backgroundColor: "#e8e8e8", color: "#6e7175" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -229,6 +235,10 @@ const Navbar = React.memo(() => {
           </IconButton>
           <Typography
             className={styles.header_wrapper}
+            style={{ 
+              fontFamily: 'Raleway, sans-serif',
+              fontWeight: '700'
+            }}
             variant="h6"
             noWrap
             component="div">
@@ -251,15 +261,20 @@ const Navbar = React.memo(() => {
               }}>
               {/* <Typography sx={{ minWidth: 100 }}>Contact</Typography>
               <Typography sx={{ minWidth: 100 }}>Profile</Typography> */}
-      {/* Badge for uncompletedTodos */}
+              {/* Badge for uncompletedTodos */}
               <Link to="/todolist">
-                <Badge badgeContent={uncompletedTodos?.length || 0} color="error">
+                <Badge
+                  badgeContent={uncompletedTodos?.length || 0}
+                  color="error">
                   <FormatListBulletedIcon color="action" />
                 </Badge>
               </Link>
               {/* Badge for remainingInvitation */}
               <Link to="/settings">
-                <Badge badgeContent={remainingInvitation?.length || 0} sx={{ paddingLeft: '1rem'}} color="error">
+                <Badge
+                  badgeContent={remainingInvitation?.length || 0}
+                  sx={{ paddingLeft: "1rem" }}
+                  color="error">
                   <NotificationsIcon color="action" />
                 </Badge>
               </Link>
@@ -335,7 +350,9 @@ const Navbar = React.memo(() => {
                 </MenuItem>
               </Link>
               <Divider />
-              <div onClick={handleCreateGroupClick} style={{paddingTop: "8px",}}>
+              <div
+                onClick={handleCreateGroupClick}
+                style={{ paddingTop: "8px" }}>
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
                     <AddHomeIcon fontSize="small" />
@@ -369,7 +386,15 @@ const Navbar = React.memo(() => {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        PaperProps={{
+          sx: {
+            backgroundColor: "#e8e8e8",
+            color: "#6e7175",
+          },
+        }}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -491,4 +516,3 @@ const Navbar = React.memo(() => {
 });
 
 export default Navbar;
-

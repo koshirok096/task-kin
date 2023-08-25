@@ -4,7 +4,9 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'Raleway', sans-serif;
+    width: 75vw;
+    margin: auto;
   }
   
   .content {
@@ -65,3 +67,113 @@
   margin: 20px 0;
   }
   
+
+  .titlewrapper{
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+    margin-left: 0.5rem;
+  }
+
+  .titlewrapper h2{
+    margin: 0;
+    font-size: 3rem;
+  }
+
+  .titlewrapper h3{
+    color: gray;
+    margin: 0;
+    padding-bottom: 3rem;
+  }
+
+  .titleandtimewrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .titleandtimewrapper p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 22px;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+  }
+
+  .titleandtimewrapper svg{
+    margin-right: 0.5rem;
+  }
+
+  hr{
+    width: 100%;
+  }
+
+
+  /* card */
+
+.groupcard{
+    /* border: 1px solid gray; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-image: url('../../images/group1.png');
+    background-position: right;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    width: calc(100% - 1rem);
+    height: 250px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    margin-top: 3rem;
+  }
+.groupcard p {
+  font-size: 2rem;
+  color: gray;
+  overflow-wrap: anywhere;
+  width: 30%;
+}
+.cardwrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.card{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+  margin: 0 0.5rem;
+  border-radius: 10px;
+  width: calc(100% / 3);
+  height: 120px;
+  color: white;
+}
+.card:nth-child(1){
+  background-image: url('../../images/gradient1.png');
+
+}
+.card:nth-child(2){
+  background-image: url('../../images/gradient2.png');
+
+}
+.card:nth-child(3){
+  background-image: url('../../images/gradient3.png');
+
+}
+
+
+.card span{
+  font-size: 2.4rem;
+  font-weight: bold;
+}
