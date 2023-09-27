@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyUser } from "../middleware/verifyUser.js";
-import Todo from "../model/Todo.js";
+import Todo from "../model/todo.js";
 
 const router = express.Router();
 
