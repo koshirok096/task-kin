@@ -68,7 +68,7 @@ const Signup = () => {
 
     if (formIsValid) {
       try {
-        const response = await axios.post('https://task-kin.onrender.com/auth/signup', {
+        const response = await axios.post('http://localhost:3001/auth/signup', {
           fullName,
           username,
           email,

@@ -36,7 +36,7 @@ export default function CreateInvitationModal({ open, onClose, groupInfo }) {
 
   const fetchGroupInfo = async () => {
     try {
-      const response = await axios.get(`https://task-kin.onrender.com/group/${groupInfo}`, {
+      const response = await axios.get(`http://localhost:3001/group/${groupInfo}`, {
         headers: {
           Authorization: token // Here
         }
@@ -65,7 +65,7 @@ export default function CreateInvitationModal({ open, onClose, groupInfo }) {
       // check user by email/ axios get user by email
       // if user exists and group array is empty, add group to user
 
-      const response = await axios.post(`https://task-kin.onrender.com/invite/${groupInfo}`, {
+      const response = await axios.post(`http://localhost:3001/invite/${groupInfo}`, {
         email: email
       }, {
         headers: {

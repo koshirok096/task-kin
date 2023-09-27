@@ -46,7 +46,7 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
 
   const getGroup = async () => {
     try {
-      const response = await fetch(`https://task-kin.onrender.com/group/${user.group[0]}`, {
+      const response = await fetch(`http://localhost:3001/group/${user.group[0]}`, {
         headers: {
           Authorization: `${token}` // Here
         }
@@ -65,7 +65,7 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
       const fetchInvitations = async () => {
         try {
           const response = await axios.get(
-            `https://task-kin.onrender.com/invite/${user.email}`
+            `http://localhost:3001/invite/${user.email}`
           );
           const invitationsData = response.data; // Assuming the response contains invitation data
           console.log("Fetched my invitations:", invitationsData); // Log fetched invitations
@@ -84,7 +84,7 @@ export default function Settings({ remainingInvitation, uncompletedTodos }) {
 
     try {
       axios.defaults.headers.common["Authorization"] = token;
-      const response = await axios.post(`https://task-kin.onrender.com/invite/${invitationId}/${yourResponse}`);
+      const response = await axios.post(`http://localhost:3001/invite/${invitationId}/${yourResponse}`);
       console.log(response);
     } catch (error) {}
   }

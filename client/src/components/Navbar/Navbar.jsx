@@ -172,7 +172,7 @@ const Navbar = React.memo(() => {
   const getUncompletedTodos = async () => {
     try {
       const response = await fetch(
-        `https://task-kin.onrender.com/todo/${user.group[0]}/inprogress`,
+        `http://localhost:3001/todo/${user.group[0]}/inprogress`,
         {
           headers: {
             Authorization: `${token}`, // ここに実際のトークンを追加
@@ -189,7 +189,7 @@ const Navbar = React.memo(() => {
   const getRemainingInvitation = async () => {
     try {
       const response = await fetch(
-        `https://task-kin.onrender.com/invite/${user.email}`,
+        `http://localhost:3001/invite/${user.email}`,
         {
           headers: {
             Authorization: `${token}`, // ここに実際のトークンを追加

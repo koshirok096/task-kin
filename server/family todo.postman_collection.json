@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://task-kin.onrender.com/users",
+					"raw": "http://localhost:3001/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://task-kin.onrender.com/users",
+					"raw": "http://localhost:3001/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -68,7 +68,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://task-kin.onrender.com/groups",
+					"raw": "http://localhost:3001/groups",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -87,7 +87,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://task-kin.onrender.com/groups",
+					"raw": "http://localhost:3001/groups",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -115,7 +115,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://task-kin.onrender.com/groups/64d5396c4587bf58e948c7bd/invite",
+					"raw": "http://localhost:3001/groups/64d5396c4587bf58e948c7bd/invite",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -136,7 +136,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://task-kin.onrender.com/invitations?id=64d5392e4587bf58e948c7ba",
+					"raw": "http://localhost:3001/invitations?id=64d5392e4587bf58e948c7ba",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,7 +161,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "https://task-kin.onrender.com/invitations/64d53b8b7d8f0be54b54099d/accept?id=",
+					"raw": "http://localhost:3001/invitations/64d53b8b7d8f0be54b54099d/accept?id=",
 					"protocol": "http",
 					"host": [
 						"localhost"

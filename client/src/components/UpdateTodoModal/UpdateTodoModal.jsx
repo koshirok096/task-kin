@@ -32,7 +32,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
   const fetchTodo = async (id) => {
     console.log(id);
     try {
-      const response = await axios.get(`https://task-kin.onrender.com/todo/read/${id}`, {
+      const response = await axios.get(`http://localhost:3001/todo/read/${id}`, {
         headers: {
           Authorization: token
         }
@@ -64,7 +64,7 @@ export default function UpdateTodoModal({ open, onClose, todoId }) {
 
   const updateTodo = async (id, e) => {
     try {
-      const response = await axios.put(`https://task-kin.onrender.com/todo/${id}`, {
+      const response = await axios.put(`http://localhost:3001/todo/${id}`, {
         title: todo.title,
         description: todo.description,
         assignedTo: todo.assignedTo,
