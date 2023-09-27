@@ -51,7 +51,7 @@ export default function TodoCard() {
 
   const getInProgressTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`, {
+      const response = await fetch(`https://task-kin.onrender.com/todo/${user.group[0]}/inprogress`, {
         headers: {
           Authorization: `${token}`
         }
@@ -74,7 +74,7 @@ export default function TodoCard() {
   
   // const getAssignedMember = async () => {
   //   try {
-  //     const response = await fetch(`http://localhost:3001/todo/${user?.username}`, {
+  //     const response = await fetch(`https://task-kin.onrender.com/todo/${user?.username}`, {
   //       headers: {
   //         Authorization: `${token}`
   //       }
@@ -88,7 +88,7 @@ export default function TodoCard() {
   // };
   const getAssignedMember = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/auth/${user?._id}`, {
+      const response = await fetch(`https://task-kin.onrender.com/auth/${user?._id}`, {
         headers: {
           Authorization: `${token}`
         }
@@ -104,7 +104,7 @@ export default function TodoCard() {
 
   const handleDeleteTodoClick = async (todoId) => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${todoId}`, {
+      const response = await fetch(`https://task-kin.onrender.com/todo/${todoId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `${token}`
