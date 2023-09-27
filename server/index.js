@@ -39,12 +39,12 @@ app.use("/todo", todoRoute); // added by koshiro
 // app.use(todoRoute);
 // app.use(shoppingRoute);
 
-const PORT = process.env.NODE_ENV || 3001; // 環境変数 NODE_ENV が設定されていればそれを使用し、設定されていない場合はデフォルトのポート 3001 を使用
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-// const PORT = 3001;
+// const PORT = process.env.NODE_ENV || 3001; // 環境変数 NODE_ENV が設定されていればそれを使用し、設定されていない場合はデフォルトのポート 3001 を使用
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
+
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
