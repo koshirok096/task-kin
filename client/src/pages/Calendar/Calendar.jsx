@@ -26,7 +26,7 @@ export default function Calendar() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/todo/${user.group[0]}`, {
         headers: {
           Authorization: `${token}`
         }

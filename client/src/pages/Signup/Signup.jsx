@@ -68,7 +68,7 @@ const Signup = () => {
 
     if (formIsValid) {
       try {
-        const response = await axios.post('http://localhost:3001/auth/signup', {
+        const response = await axios.post(`${process.env.REACT_APP_PROD_API_URL}/auth/signup`, {
           fullName,
           username,
           email,

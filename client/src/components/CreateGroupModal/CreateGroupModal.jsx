@@ -36,7 +36,7 @@ export default function CreateGroupModal({ open, onClose }) {
   const createGroup = async () => {
 
     try {
-      const res = await axios.post("http://localhost:3001/group/create", { name: title }, {
+      const res = await axios.post(`${process.env.REACT_APP_PROD_API_URL}/group/create`, { name: title }, {
         headers: {
           "Authorization": token
         }

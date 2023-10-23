@@ -51,7 +51,7 @@ export default function TodoCard() {
 
   const getInProgressTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/todo/${user.group[0]}/inprogress`, {
         headers: {
           Authorization: `${token}`
         }
@@ -88,7 +88,7 @@ export default function TodoCard() {
   // };
   const getAssignedMember = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/auth/${user?._id}`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/auth/${user?._id}`, {
         headers: {
           Authorization: `${token}`
         }
@@ -104,7 +104,7 @@ export default function TodoCard() {
 
   const handleDeleteTodoClick = async (todoId) => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${todoId}`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/todo/${todoId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `${token}`

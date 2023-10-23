@@ -52,7 +52,7 @@ export default function AddTodoModal({ open, onClose }) {
       createdBy: user._id, // Use actual user's userId from Redux
     };
     try {
-      const response = await fetch('http://localhost:3001/todo/create', {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/todo/create`, {
         method: 'POST',
         headers: {
           Authorization: `${token}`, // Make sure to add "Bearer" before token
@@ -75,14 +75,14 @@ export default function AddTodoModal({ open, onClose }) {
   const fetchMembers = async () => {
     const groupId = user.group[0];
     try {
-      const group = await axios.get(`http://localhost:3001/group/${groupId}`);
+      const group = await axios.get(`${process.env.REACT_APP_PROD_API_URL}/group/${groupId}`);
       const members = group.data.members;
       console.log('members', members);
 
       const membersData = await Promise.all(
         members.map(async (member) => {
           const response = await axios.get(
-            `http://localhost:3001/auth/${member}`
+            `${process.env.REACT_APP_PROD_API_URL}/auth/${member}`
           );
           return response.data;
         })

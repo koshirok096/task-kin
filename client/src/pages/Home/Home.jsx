@@ -26,7 +26,7 @@ const Home = () => {
 
   const fetchUser = async () => {
     try {
-      const user = await axios.get("http://localhost:3001/auth/me", { 
+      const user = await axios.get(`${process.env.REACT_APP_PROD_API_URL}/auth/me`, { 
         headers: {
           "Authorization": token
         }
@@ -58,7 +58,7 @@ const Home = () => {
 
   const getGroup = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/group/${user.group[0]}`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/group/${user.group[0]}`, {
         headers: {
           Authorization: `${token}` // Here
         }
@@ -72,7 +72,7 @@ const Home = () => {
 
   const getUncompletedTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/todo/${user.group[0]}/inprogress`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/todo/${user.group[0]}/inprogress`, {
         headers: {
           Authorization: `${token}` // ここに実際のトークンを追加
         }
@@ -86,7 +86,7 @@ const Home = () => {
 
   const getRemainingInvitation = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/invite/${user.email}`, {
+      const response = await fetch(`${process.env.REACT_APP_PROD_API_URL}/invite/${user.email}`, {
         headers: {
           Authorization: `${token}` // ここに実際のトークンを追加
         }
